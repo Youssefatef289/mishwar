@@ -1,26 +1,47 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F8FAFC;
+  --foreground: #111827;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary-light: #E6F4EF;
+  --color-primary: #006B4D;
+  --color-primary-hover: #00543C;
+  --color-primary-accent: #04875B;
+  --color-dark-charcoal: #111827;
+  --color-dark-sidebar: #0F172A;
+  --color-status-active: #10B981;
+  --color-status-pending: #F59E0B;
+  --color-status-urgent: #EF4444;
+  --color-status-info: #3B82F6;
+  
+  --font-sans: var(--font-cairo);
+  
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0F172A;
+    --foreground: #F8FAFC;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-cairo), Arial, Helvetica, sans-serif;
+  direction: rtl;
+}
+
+/* Base styles for utilities if needed */
+.glass-panel {
+  @apply bg-white/70 backdrop-blur-md border border-white/20;
 }

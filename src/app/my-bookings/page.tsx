@@ -63,7 +63,7 @@ export default function MyBookingsPage() {
           bookings.map(booking => (
             <div key={booking.id} className="bg-white rounded-3xl border border-gray-200 overflow-hidden shadow-sm flex flex-col md:flex-row">
               <div className="md:w-1/3 h-48 md:h-auto">
-                <img src={booking.carDetails?.images[0] || 'https://via.placeholder.com/400'} alt="Car" className="w-full h-full object-cover" />
+                <img src={booking.carDetails?.images?.[0] || 'https://via.placeholder.com/400'} alt="Car" className="w-full h-full object-cover" />
               </div>
               <div className="p-6 md:w-2/3 flex flex-col justify-between">
                 <div>
@@ -108,7 +108,7 @@ export default function MyBookingsPage() {
                       <ShieldCheck className="text-[#006B4D] w-5 h-5" />
                       <div>
                         <p className="text-xs text-gray-500">التكلفة الإجمالية</p>
-                        <p className="font-bold text-[#006B4D]">{booking.totalPrice.toLocaleString()} ج.م</p>
+                        <p className="font-bold text-[#006B4D]">{(booking.totalPrice ?? 0).toLocaleString()} ج.م</p>
                       </div>
                     </div>
                   </div>

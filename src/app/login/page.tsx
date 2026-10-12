@@ -14,9 +14,10 @@ export default function LoginPage() {
     e.preventDefault();
     const user = loginUser(email);
     if (user) {
-      if (user.role === 'Renter') router.push('/');
-      else if (user.role === 'Dealer') router.push('/dealer/dashboard');
-      else if (user.role === 'Host') router.push('/host/dashboard');
+      const role = user.role?.toLowerCase();
+      if (role === 'renter') router.push('/');
+      else if (role === 'dealer') router.push('/dealer/dashboard');
+      else if (role === 'host') router.push('/host/dashboard');
       else router.push('/');
     } else {
       setError('Invalid email or user not found.');

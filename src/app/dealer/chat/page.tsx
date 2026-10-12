@@ -32,6 +32,7 @@ export default function DealerChat() {
     if (!newMessage.trim() || !user || !selectedConvo) return;
     
     sendMessage(selectedConvo.id, {
+      id: Date.now().toString(),
       senderId: user.id,
       text: newMessage,
       timestamp: new Date().toISOString()

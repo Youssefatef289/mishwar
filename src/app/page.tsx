@@ -21,9 +21,9 @@ export default function HomePage() {
     setDealers(allDealers);
   }, []);
 
-  const fadeUp = {
+  const fadeUp: any = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
 
   return (
@@ -129,43 +129,43 @@ export default function HomePage() {
                     </div>
                     {/* Image */}
                     <img 
-                      src={car.images[0] || 'https://via.placeholder.com/600'} 
-                      alt={`${car.brand} ${car.model}`} 
+                      src={car.images?.[0] || car.image || 'https://via.placeholder.com/600'} 
+                      alt={`${car.brand || car.name} ${car.model || ''}`} 
                       className="w-full h-full object-contain transform group-hover:scale-110 transition-transform duration-700 drop-shadow-2xl"
                     />
                   </div>
                   
                   <div className="p-6 flex-1 flex flex-col">
                     <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-2xl font-bold text-gray-900 line-clamp-1">{car.brand} {car.model}</h3>
+                      <h3 className="text-2xl font-bold text-gray-900 line-clamp-1">{car.brand || car.name} {car.model || ''}</h3>
                       <div className="flex items-center gap-1 bg-yellow-50 px-2 py-1 rounded-lg">
                         <Star className="w-4 h-4 text-yellow-500 fill-current" />
                         <span className="text-xs font-bold text-yellow-700">4.9</span>
                       </div>
                     </div>
-                    <p className="text-gray-500 text-sm mb-6">{car.category} • موديل {car.year}</p>
+                    <p className="text-gray-500 text-sm mb-6">{car.category || car.type || 'فاخرة'} • موديل {car.year || 2024}</p>
                     
                     <div className="flex justify-between text-sm text-gray-600 mb-8 bg-gray-50 p-4 rounded-2xl">
                       <div className="flex flex-col items-center gap-1">
                         <span className="text-gray-400 text-xs">ناقل الحركة</span>
-                        <span className="font-semibold text-gray-800">{car.specs.transmission}</span>
+                        <span className="font-semibold text-gray-800">{car.specs?.transmission || 'أوتوماتيك'}</span>
                       </div>
                       <div className="w-px bg-gray-200"></div>
                       <div className="flex flex-col items-center gap-1">
                         <span className="text-gray-400 text-xs">الوقود</span>
-                        <span className="font-semibold text-gray-800">{car.specs.fuel}</span>
+                        <span className="font-semibold text-gray-800">{car.specs?.fuel || 'بنزين'}</span>
                       </div>
                       <div className="w-px bg-gray-200"></div>
                       <div className="flex flex-col items-center gap-1">
                         <span className="text-gray-400 text-xs">المقاعد</span>
-                        <span className="font-semibold text-gray-800">{car.specs.seats} ركاب</span>
+                        <span className="font-semibold text-gray-800">{car.specs?.seats || 5} ركاب</span>
                       </div>
                     </div>
                     
                     <div className="mt-auto flex items-center justify-between">
                       <div>
                         <p className="text-xs text-gray-500 font-medium">السعر اليومي</p>
-                        <p className="text-2xl font-bold text-[#006B4D]">{car.dailyPrice.toLocaleString()} <span className="text-sm">ج.م</span></p>
+                        <p className="text-2xl font-bold text-[#006B4D]">{(car.dailyPrice ?? car.price ?? car.pricePerDay ?? 0).toLocaleString()} <span className="text-sm">ج.م</span></p>
                       </div>
                       <Link href={`/fleet/${car.id}`} className="bg-gray-900 hover:bg-black text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-md">
                         احجز الآن

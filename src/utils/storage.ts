@@ -2,27 +2,35 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  phone: string;
-  role: 'renter' | 'dealer' | 'host';
+  phone?: string;
+  role?: string;
   avatar?: string;
-  companyName?: string; // For dealer
+  companyName?: string;
+  [key: string]: any;
 }
 
 export interface Car {
   id: string;
-  ownerId: string; // dealer or host id
-  brand: string;
-  model: string;
-  year: number;
-  category: string;
-  dailyPrice: number;
-  images: string[];
-  status: 'available' | 'rented' | 'maintenance';
-  specs: {
-    transmission: string;
-    fuel: string;
-    seats: number;
+  ownerId: string;
+  brand?: string;
+  make?: string;
+  model?: string;
+  name?: string;
+  year?: number;
+  category?: string;
+  type?: string;
+  dailyPrice?: number;
+  price?: number;
+  pricePerDay?: number;
+  images?: string[];
+  image?: string;
+  status?: string;
+  specs?: {
+    transmission?: string;
+    fuel?: string;
+    seats?: number;
   };
+  [key: string]: any;
 }
 
 export interface Booking {
@@ -32,34 +40,37 @@ export interface Booking {
   ownerId: string;
   startDate: string;
   endDate: string;
-  totalDays: number;
-  totalPrice: number;
-  status: 'pending' | 'approved' | 'rejected' | 'completed' | 'active';
+  totalDays?: number;
+  totalPrice?: number;
+  status?: string;
   branch?: string;
-  addons: string[];
+  addons?: string[];
+  [key: string]: any;
 }
 
 export interface ChatMessage {
-  id: string;
-  senderId: string;
+  id?: string;
+  senderId?: string;
   text: string;
-  timestamp: string;
+  timestamp?: string;
+  [key: string]: any;
 }
 
 export interface Conversation {
   id: string;
-  renterId: string;
-  dealerId: string;
+  renterId?: string;
+  dealerId?: string;
   bookingId?: string;
   carId?: string;
   messages: ChatMessage[];
-  lastUpdated: string;
+  lastUpdated?: string;
+  [key: string]: any;
 }
 
 // MOCK DATA SEED
 const initialCars: Car[] = [
-  { id: '1', ownerId: 'dealer1', brand: 'Porsche', model: 'Cayenne GTS', year: 2024, category: 'SUV', dailyPrice: 12000, images: ['https://images.unsplash.com/photo-1503376712351-56f8f7004f1e?auto=format&fit=crop&q=80'], status: 'available', specs: { transmission: 'Auto', fuel: 'Petrol', seats: 5 } },
-  { id: '2', ownerId: 'dealer1', brand: 'Mercedes', model: 'S-Class', year: 2023, category: 'Sedan', dailyPrice: 15000, images: ['https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&q=80'], status: 'available', specs: { transmission: 'Auto', fuel: 'Hybrid', seats: 4 } },
+  { id: '1', ownerId: 'dealer1', brand: 'Porsche', make: 'Porsche', model: 'Cayenne GTS', name: 'Porsche Cayenne GTS', year: 2024, category: 'SUV', type: 'SUV', dailyPrice: 12000, pricePerDay: 12000, images: ['https://images.unsplash.com/photo-1503376712351-56f8f7004f1e?auto=format&fit=crop&q=80'], status: 'available', specs: { transmission: 'Auto', fuel: 'Petrol', seats: 5 } },
+  { id: '2', ownerId: 'dealer1', brand: 'Mercedes', make: 'Mercedes', model: 'S-Class', name: 'Mercedes S-Class', year: 2023, category: 'Sedan', type: 'Sedan', dailyPrice: 15000, pricePerDay: 15000, images: ['https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&q=80'], status: 'available', specs: { transmission: 'Auto', fuel: 'Hybrid', seats: 4 } },
 ];
 
 const initialUsers: User[] = [
@@ -73,7 +84,7 @@ export const initStorage = () => {
   if (!localStorage.getItem('mishwar_fleet')) localStorage.setItem('mishwar_fleet', JSON.stringify(initialCars));
   if (!localStorage.getItem('mishwar_bookings')) localStorage.setItem('mishwar_bookings', JSON.stringify([]));
   if (!localStorage.getItem('mishwar_conversations')) localStorage.setItem('mishwar_conversations', JSON.stringify([]));
-  if (!localStorage.getItem('mishwar_current_user')) localStorage.setItem('mishwar_current_user', JSON.stringify(initialUsers[1])); // Default to renter
+  if (!localStorage.getItem('mishwar_current_user')) localStorage.setItem('mishwar_current_user', JSON.stringify(initialUsers[1]));
 };
 
 // Users
@@ -81,7 +92,7 @@ export const getUsers = (): User[] => typeof window !== 'undefined' ? JSON.parse
 export const getCurrentUser = (): User | null => typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('mishwar_current_user') || 'null') : null;
 export const loginUser = (email: string) => {
   const users = getUsers();
-  const user = users.find(u => u.email === email);
+  const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
   if (user && typeof window !== 'undefined') localStorage.setItem('mishwar_current_user', JSON.stringify(user));
   return user;
 };
@@ -102,7 +113,7 @@ export const saveCar = (car: Car) => {
   fleet.push(car);
   if (typeof window !== 'undefined') localStorage.setItem('mishwar_fleet', JSON.stringify(fleet));
 };
-export const updateCarStatus = (carId: string, status: Car['status']) => {
+export const updateCarStatus = (carId: string, status: string) => {
   const fleet = getFleet();
   const index = fleet.findIndex(c => c.id === carId);
   if (index !== -1) fleet[index].status = status;
@@ -117,14 +128,14 @@ export const createBooking = (booking: Booking) => {
   bookings.push(booking);
   if (typeof window !== 'undefined') localStorage.setItem('mishwar_bookings', JSON.stringify(bookings));
 };
-export const updateBookingStatus = (id: string, status: Booking['status']) => {
+export const updateBookingStatus = (id: string, status: string) => {
   const bookings = getBookings();
   const index = bookings.findIndex(b => b.id === id);
   if (index !== -1) bookings[index].status = status;
   if (typeof window !== 'undefined') localStorage.setItem('mishwar_bookings', JSON.stringify(bookings));
 };
-export const getBookingsForUser = (userId: string, role: User['role']) => {
-  return getBookings().filter(b => role === 'renter' ? b.renterId === userId : b.ownerId === userId);
+export const getBookingsForUser = (userId: string, role?: string) => {
+  return getBookings().filter(b => (role?.toLowerCase() === 'renter') ? b.renterId === userId : b.ownerId === userId);
 };
 
 // Chat
@@ -140,9 +151,9 @@ export const sendMessage = (threadId: string, msg: ChatMessage) => {
   const convs = getConversations();
   const index = convs.findIndex(c => c.id === threadId);
   if (index !== -1) {
+    if (!msg.id) msg.id = Date.now().toString();
     convs[index].messages.push(msg);
     convs[index].lastUpdated = new Date().toISOString();
   }
   if (typeof window !== 'undefined') localStorage.setItem('mishwar_conversations', JSON.stringify(convs));
 };
-

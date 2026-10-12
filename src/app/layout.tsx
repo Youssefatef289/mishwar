@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Cairo } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import AppInitializer from "@/components/AppInitializer";
+import { Suspense } from "react";
 
 const cairo = Cairo({
   variable: "--font-cairo",
@@ -14,8 +16,6 @@ export const metadata: Metadata = {
   title: "Mishwar | مشوار - Car Rental & Fleet Management",
   description: "Premium Car Rental & Fleet Management Web Application",
 };
-
-import { Suspense } from "react";
 
 export default function RootLayout({
   children,
@@ -32,6 +32,7 @@ export default function RootLayout({
         <main className="flex-1 flex flex-col">
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );

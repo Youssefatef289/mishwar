@@ -1,112 +1,219 @@
 "use client";
-
 import React, { useState, useEffect } from 'react';
-import { getCurrentUser, getFleet, saveCar } from '@/utils/storage';
-import { DollarSign, Car, Plus } from 'lucide-react';
+import { getFleet, saveCar, getCurrentUser, Car } from '@/utils/storage';
+import { 
+  Key, Plus, Calendar, DollarSign, TrendingUp, ShieldCheck, 
+  Car as CarIcon, CheckCircle2, Star, Clock 
+} from 'lucide-react';
 
-export default function HostDashboard() {
-  const [user, setUser] = useState<any>(null);
-  const [myCars, setMyCars] = useState<any[]>([]);
-  const [newCar, setNewCar] = useState({ name: '', type: '', price: '', image: '' });
+export default function HostDashboardPage() {
+  const [myCars, setMyCars] = useState<Car[]>([]);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  // Form State
+  const [brand, setBrand] = useState('تويوتا');
+  const [model, setModel] = useState('كورولا 2024');
+  const [year, setYear] = useState(2024);
+  const [dailyPrice, setDailyPrice] = useState(2200);
+  const [rentalType, setRentalType] = useState('يومي ومشاوير بسائق');
+  const [city, setCity] = useState('القاهرة - التجمع الخامس');
 
   useEffect(() => {
-    const u = getCurrentUser();
-    if (u && u.role === 'host') {
-      setUser(u);
-      loadCars(u.id);
+    const user = getCurrentUser();
+    const all = getFleet();
+    if (user) {
+      setMyCars(all.filter(c => c.ownerId === user.id || c.ownerId === 'host_ahmed'));
     }
   }, []);
 
-  const loadCars = (userId: string) => {
-    const allCars = getFleet();
-    setMyCars(allCars.filter(c => c.ownerId === userId));
-  };
-
   const handleAddCar = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
-    saveCar({
-      id: Date.now().toString(),
-      ownerId: user.id,
-      name: newCar.name,
-      type: newCar.type,
-      price: Number(newCar.price),
-      image: newCar.image || 'https://via.placeholder.com/300x200',
-      status: 'available'
-    });
-    setNewCar({ name: '', type: '', price: '', image: '' });
-    loadCars(user.id);
-    alert('Car listed successfully!');
+    const user = getCurrentUser();
+    const newCar: Car = {
+      id: 'car_host_' + Date.now(),
+      ownerId: user ? user.id : 'host_ahmed',
+      brand,
+      model,
+      year: Number(year),
+      category: 'سيدان اقتصادية فاخرة',
+      dailyPrice: Number(dailyPrice),
+      images: ['https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80'],
+      status: 'available',
+      mileageLimit: '300 كم/اليوم',
+      transmission: 'أوتوماتيك',
+      fuel: 'بنزين 92',
+      seats: 5,
+      horsepower: '140 حصان',
+      rating: 4.9,
+      inspectionScore: 95,
+      dealershipName: user?.name || 'أحمد كمال (مالك P2P)',
+      features: ['تأمين شامل', 'شاشة ذكية', 'بلوتوث'],
+      tags: [rentalType, city]
+    };
+
+    saveCar(newCar);
+    setMyCars([...myCars, newCar]);
+    setIsAddModalOpen(false);
+    alert('تمت إضافة سيارتك الشخصية بنجاح إلى شبكة مشوار للمشاوير والتأجير!');
   };
 
-  if (!user) return <div className="p-8 text-center">Loading or unauthorized...</div>;
-
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-8">
-      <h1 className="text-3xl font-bold text-gray-800">P2P Host Dashboard</h1>
+    <div className="min-h-screen bg-[#F8FAFC] pb-24 text-right">
       
-      <div className="grid md:grid-cols-3 gap-6">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 flex items-center justify-between">
+      {/* Top Banner */}
+      <div className="bg-[#0B132B] text-white py-10 px-4 sm:px-6 lg:px-8 border-b border-slate-800">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <div className="w-16 h-16 rounded-2xl bg-[#006B4D] flex items-center justify-center text-white shadow-lg shrink-0">
+              <Key className="w-8 h-8 text-[#10B981]" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/40 px-3 py-0.5 rounded-full text-xs font-black">
+                  مضيف معتمد P2P • رخصة موثقة
+                </span>
+              </div>
+              <h1 className="text-2xl md:text-3xl font-black text-white">لوحة مالك السيارة - تأجير ومشاوير ذكية</h1>
+            </div>
+          </div>
+
           <div>
-            <p className="text-gray-500 text-sm">Total Earnings</p>
-            <h3 className="text-2xl font-bold">$0.00</h3>
-          </div>
-          <div className="p-3 bg-green-100 rounded-full text-green-600">
-            <DollarSign className="w-6 h-6" />
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100 flex items-center justify-between">
-          <div>
-            <p className="text-gray-500 text-sm">Listed Cars</p>
-            <h3 className="text-2xl font-bold">{myCars.length}</h3>
-          </div>
-          <div className="p-3 bg-blue-100 rounded-full text-blue-600">
-            <Car className="w-6 h-6" />
+            <button 
+              onClick={() => setIsAddModalOpen(true)}
+              className="bg-[#006B4D] hover:bg-[#00533C] text-white px-5 py-3 rounded-2xl font-bold text-xs md:text-sm shadow-md transition-all flex items-center gap-2"
+            >
+              <Plus className="w-5 h-5" />
+              <span>إضافة سيارتي الخاصة للتأجير</span>
+            </button>
           </div>
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-8">
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-          <h2 className="text-xl font-semibold mb-4 flex items-center"><Plus className="w-5 h-5 mr-2" /> List a New Car</h2>
-          <form onSubmit={handleAddCar} className="space-y-4">
-            <div>
-              <label className="block text-sm text-gray-600 mb-1">Car Name</label>
-              <input type="text" required value={newCar.name} onChange={e => setNewCar({...newCar, name: e.target.value})} className="w-full border rounded p-2" placeholder="e.g. Honda Civic" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 space-y-8">
+        
+        {/* Earnings KPI Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm">
+            <span className="text-xs font-bold text-slate-400 block mb-1">صافي أرباح الشهر الحالي</span>
+            <span className="text-3xl font-black text-[#006B4D] block">38,400 <span className="text-xs">ج.م</span></span>
+          </div>
+
+          <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm">
+            <span className="text-xs font-bold text-slate-400 block mb-1">السيارات المعروضة</span>
+            <span className="text-3xl font-black text-slate-900 block">{myCars.length} <span className="text-xs">سيارات</span></span>
+          </div>
+
+          <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm">
+            <span className="text-xs font-bold text-slate-400 block mb-1">المشاوير المكتملة</span>
+            <span className="text-3xl font-black text-[#3B82F6] block">19 <span className="text-xs">مشواراً</span></span>
+          </div>
+
+          <div className="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm">
+            <span className="text-xs font-bold text-slate-400 block mb-1">متوسط تقييم المستأجرين</span>
+            <div className="flex items-center gap-1.5 mt-1">
+              <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+              <span className="text-2xl font-black text-slate-900">4.9 / 5</span>
             </div>
-            <div>
-              <label className="block text-sm text-gray-600 mb-1">Type</label>
-              <input type="text" required value={newCar.type} onChange={e => setNewCar({...newCar, type: e.target.value})} className="w-full border rounded p-2" placeholder="e.g. Sedan" />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-600 mb-1">Price per Day ($)</label>
-              <input type="number" required value={newCar.price} onChange={e => setNewCar({...newCar, price: e.target.value})} className="w-full border rounded p-2" placeholder="e.g. 40" />
-            </div>
-            <button type="submit" className="w-full bg-purple-600 text-white py-2 rounded font-medium hover:bg-purple-700">List Car</button>
-          </form>
+          </div>
         </div>
 
-        <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-          <h2 className="text-xl font-semibold mb-4">My Fleet</h2>
-          {myCars.length === 0 ? (
-            <p className="text-gray-500">You haven't listed any cars yet.</p>
-          ) : (
-            <div className="space-y-4">
-              {myCars.map(car => (
-                <div key={car.id} className="flex items-center gap-4 p-3 border rounded">
-                  <div className="w-16 h-12 bg-gray-200 rounded overflow-hidden">
-                    <img src={car.image} alt={car.name} className="w-full h-full object-cover" />
-                  </div>
-                  <div>
-                    <h4 className="font-medium">{car.name}</h4>
-                    <p className="text-sm text-gray-500">${car.price}/day • {car.status}</p>
-                  </div>
+        {/* My Listed Cars */}
+        <div className="bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-sm space-y-6">
+          <h2 className="text-xl font-black text-slate-900 border-b border-slate-100 pb-4">
+            سياراتي المعروضة على المنصة
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {myCars.map((car) => (
+              <div key={car.id} className="border border-slate-200 rounded-2xl p-4 flex items-center gap-4 bg-[#F8FAFC]">
+                <img 
+                  src={car.images?.[0] || 'https://via.placeholder.com/200'} 
+                  alt="Car" 
+                  className="w-24 h-16 object-contain rounded-xl bg-white p-1"
+                />
+                <div className="flex-1">
+                  <h3 className="font-black text-slate-900 text-sm">{car.brand} {car.model}</h3>
+                  <p className="text-xs text-slate-500 font-bold">{car.dailyPrice?.toLocaleString()} ج.م / يوم</p>
+                  <span className="inline-block bg-emerald-50 text-emerald-700 text-[10px] font-black px-2 py-0.5 rounded-full mt-1">
+                    جاهزة للاستلام
+                  </span>
                 </div>
-              ))}
-            </div>
-          )}
+              </div>
+            ))}
+          </div>
         </div>
+
       </div>
+
+      {/* Add Modal */}
+      {isAddModalOpen && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full border border-slate-200 shadow-2xl text-right space-y-4 text-xs font-bold">
+            <div className="flex justify-between items-center border-b border-slate-100 pb-3">
+              <h2 className="text-lg font-black text-slate-900">إضافة سيارة شخصية للتأجير P2P</h2>
+              <button onClick={() => setIsAddModalOpen(false)} className="text-slate-400 font-black">✕</button>
+            </div>
+
+            <form onSubmit={handleAddCar} className="space-y-3">
+              <div>
+                <label className="block text-slate-700 mb-1">الماركة والموديل</label>
+                <input 
+                  type="text" 
+                  value={`${brand} ${model}`}
+                  onChange={e => setModel(e.target.value)}
+                  required 
+                  className="w-full bg-[#F8FAFC] border border-slate-200 rounded-xl p-2.5" 
+                />
+              </div>
+
+              <div>
+                <label className="block text-slate-700 mb-1">السعر المطلوب لليوم أو المشوار (ج.م)</label>
+                <input 
+                  type="number" 
+                  value={dailyPrice} 
+                  onChange={e => setDailyPrice(Number(e.target.value))}
+                  required 
+                  className="w-full bg-[#F8FAFC] border border-slate-200 rounded-xl p-2.5" 
+                />
+              </div>
+
+              <div>
+                <label className="block text-slate-700 mb-1">نوع الإيجار</label>
+                <select 
+                  value={rentalType} 
+                  onChange={e => setRentalType(e.target.value)}
+                  className="w-full bg-[#F8FAFC] border border-slate-200 rounded-xl p-2.5"
+                >
+                  <option value="يومي ومشاوير بسائق">يومي ومشاوير خاصة بسائق</option>
+                  <option value="قيادة ذاتية يومي فقط">قيادة ذاتية يومي فقط</option>
+                  <option value="مشاوير مطار ومناسبات">مشاوير مطار ومناسبات VIP</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-slate-700 mb-1">منطقة التسليم والتواجد</label>
+                <input 
+                  type="text" 
+                  value={city} 
+                  onChange={e => setCity(e.target.value)}
+                  required 
+                  className="w-full bg-[#F8FAFC] border border-slate-200 rounded-xl p-2.5" 
+                />
+              </div>
+
+              <div className="pt-3 flex justify-end gap-2">
+                <button type="submit" className="bg-[#006B4D] text-white px-5 py-2.5 rounded-xl font-bold">
+                  نشر السيارة فوراً
+                </button>
+                <button type="button" onClick={() => setIsAddModalOpen(false)} className="bg-slate-100 text-slate-700 px-3 py-2.5 rounded-xl">
+                  إلغاء
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

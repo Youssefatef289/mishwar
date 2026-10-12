@@ -139,9 +139,8 @@ const INITIAL_FLEET: Car[] = [
     category: 'دفع رباعي SUV',
     dailyPrice: 14500,
     images: [
-      'https://images.unsplash.com/photo-1503376712351-56f8f7004f1e?auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&q=80'
+      '/images/carDesktopView.webp',
+      '/images/car.webp'
     ],
     status: 'available',
     mileageLimit: '300 كم/اليوم',
@@ -164,8 +163,8 @@ const INITIAL_FLEET: Car[] = [
     category: 'سيدان فاخرة',
     dailyPrice: 18000,
     images: [
-      'https://images.unsplash.com/photo-1617531653332-bd46c24f2068?auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80'
+      '/images/car.webp',
+      '/images/carDesktopView.webp'
     ],
     status: 'available',
     mileageLimit: '250 كم/اليوم',
@@ -188,8 +187,8 @@ const INITIAL_FLEET: Car[] = [
     category: 'سيدان فاخرة',
     dailyPrice: 7500,
     images: [
-      'https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80'
+      '/images/carDesktopView.webp',
+      '/images/car.webp'
     ],
     status: 'available',
     mileageLimit: '300 كم/اليوم',
@@ -212,7 +211,7 @@ const INITIAL_FLEET: Car[] = [
     category: 'دفع رباعي SUV',
     dailyPrice: 3800,
     images: [
-      'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&q=80'
+      '/images/car.webp'
     ],
     status: 'available',
     mileageLimit: '350 كم/اليوم',
@@ -235,7 +234,7 @@ const INITIAL_FLEET: Car[] = [
     category: 'كروس أوفر',
     dailyPrice: 2800,
     images: [
-      'https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?auto=format&fit=crop&q=80'
+      '/images/carDesktopView.webp'
     ],
     status: 'available',
     mileageLimit: '300 كم/اليوم',

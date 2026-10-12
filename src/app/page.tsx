@@ -47,36 +47,41 @@ export default function HomePage() {
     router.push(`/fleet?${params.toString()}`);
   };
 
-  // Top Global Brands list matching Sylndr style
+  // Top Global Brands list with real WebP logos
   const topBrands = [
-    { name: 'مرسيدس-بنز', en: 'Mercedes', count: '54 سيارة', logoText: 'MB' },
-    { name: 'بي إم دبليو', en: 'BMW', count: '42 سيارة', logoText: 'BMW' },
-    { name: 'بورشه', en: 'Porsche', count: '19 سيارة', logoText: 'PORSCHE' },
-    { name: 'رينج روفر', en: 'Range Rover', count: '15 سيارة', logoText: 'RR' },
-    { name: 'تويوتا', en: 'Toyota', count: '68 سيارة', logoText: 'TOYOTA' },
-    { name: 'هيونداي', en: 'Hyundai', count: '83 سيارة', logoText: 'HYUNDAI' },
-    { name: 'كيا', en: 'Kia', count: '61 سيارة', logoText: 'KIA' },
+    { name: 'مرسيدس-بنز', en: 'Mercedes', count: '54 سيارة', logo: '/images/Mercedes-Benz.webp' },
+    { name: 'بي إم دبليو', en: 'BMW', count: '42 سيارة', logo: '/images/BMW.webp' },
+    { name: 'هيونداي', en: 'Hyundai', count: '83 سيارة', logo: '/images/Hyundai.webp' },
+    { name: 'كيا', en: 'Kia', count: '61 سيارة', logo: '/images/Kia.webp' },
+    { name: 'نيسان', en: 'Nissan', count: '45 سيارة', logo: '/images/Nissan.webp' },
+    { name: 'بيجو', en: 'Peugeot', count: '38 سيارة', logo: '/images/Peugeot.webp' },
+    { name: 'رينو', en: 'Renault', count: '29 سيارة', logo: '/images/Renault.webp' },
+    { name: 'فولكس فاجن', en: 'Volkswagen', count: '31 سيارة', logo: '/images/Volkswagen.webp' },
+    { name: 'جيب', en: 'Jeep', count: '24 سيارة', logo: '/images/Jeep.webp' },
+    { name: 'إم جي', en: 'MG', count: '47 سيارة', logo: '/images/MG.webp' },
+    { name: 'ستروين', en: 'Citroen', count: '22 سيارة', logo: '/images/Citroen.webp' },
+    { name: 'أوبل', en: 'Opel', count: '18 سيارة', logo: '/images/Opel.webp' },
   ];
 
   return (
     <div className="flex flex-col min-h-screen bg-[#F8FAFC] text-right font-sans">
       
       {/* 1. Hero Section (Conversion-Focused, Inspired by Sylndr) */}
-      <section className="relative bg-[#0B132B] text-white pt-20 pb-36 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative bg-[#0B132B] text-white pt-16 pb-40 px-4 sm:px-6 lg:px-8 overflow-hidden">
         {/* Ambient Glow & Background Image */}
-        <div className="absolute inset-0 opacity-30 mix-blend-luminosity">
+        <div className="absolute inset-0 opacity-25 mix-blend-luminosity">
           <img 
             src="https://images.unsplash.com/photo-1503376712351-56f8f7004f1e?auto=format&fit=crop&q=80" 
             alt="Luxury Fleet" 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-[#0B132B]/80 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0B132B] via-[#0B132B]/85 to-transparent"></div>
         </div>
 
         <div className="relative max-w-7xl mx-auto z-10 flex flex-col items-center text-center">
           
           {/* Trust Pill */}
-          <div className="inline-flex items-center gap-2 bg-[#006B4D]/30 border border-[#10B981]/40 px-4 py-1.5 rounded-full text-xs font-bold text-[#10B981] mb-6 backdrop-blur-md shadow-sm">
+          <div className="inline-flex items-center gap-2 bg-[#006B4D]/40 border border-[#10B981]/40 px-4 py-1.5 rounded-full text-xs font-bold text-[#10B981] mb-6 backdrop-blur-md shadow-sm">
             <Sparkles className="w-4 h-4 text-[#10B981]" />
             <span>المنصة المصرية المعتمدة الأولى لتأجير السيارات الفاخرة والعائلية</span>
           </div>
@@ -90,12 +95,21 @@ export default function HomePage() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mt-4 mb-8 leading-relaxed font-medium">
+          <p className="text-slate-300 text-sm sm:text-base md:text-lg max-w-2xl mt-4 mb-6 leading-relaxed font-medium">
             أكبر أسطول سيارات في القاهرة، الجيزة، والساحل الشمالي. بدون إجراءات ورقية معقدة، وبدون إيداع نقدي للعملاء المعتمدين.
           </p>
 
+          {/* Focal Car Image Presentation */}
+          <div className="relative max-w-xl w-full my-2 flex justify-center">
+            <img 
+              src="/images/carDesktopView.webp" 
+              alt="Mishwar Signature Car" 
+              className="w-full max-h-56 object-contain drop-shadow-[0_25px_35px_rgba(0,107,77,0.45)] hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+
           {/* Trust Badges */}
-          <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8 text-xs font-bold text-slate-300 mb-10">
+          <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6 text-xs font-bold text-slate-300 mt-4 mb-6">
             <div className="flex items-center gap-2 bg-white/5 border border-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
               <CheckCircle2 className="w-4 h-4 text-[#10B981]" />
               <span>فحص معتمد 85+ نقطة</span>
@@ -276,15 +290,19 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
           {topBrands.map((brand, idx) => (
             <Link
               key={idx}
               href={`/fleet?brand=${brand.en}`}
-              className="bg-white p-5 rounded-3xl border border-slate-100 hover:border-[#006B4D]/30 shadow-sm hover:shadow-md transition-all group flex flex-col items-center text-center justify-center cursor-pointer"
+              className="bg-white p-5 rounded-3xl border border-slate-100 hover:border-[#006B4D]/40 shadow-sm hover:shadow-md transition-all group flex flex-col items-center text-center justify-center cursor-pointer hover:-translate-y-1 duration-200"
             >
-              <div className="w-14 h-14 rounded-2xl bg-slate-50 group-hover:bg-[#E6F4EF] flex items-center justify-center text-slate-800 group-hover:text-[#006B4D] font-black text-xs md:text-sm mb-3 transition-colors border border-slate-100">
-                {brand.logoText}
+              <div className="w-16 h-16 rounded-2xl bg-slate-50 group-hover:bg-[#E6F4EF] flex items-center justify-center p-2.5 mb-3 transition-colors border border-slate-100">
+                <img 
+                  src={brand.logo} 
+                  alt={brand.name} 
+                  className="w-full h-full object-contain filter group-hover:scale-110 transition-transform duration-300" 
+                />
               </div>
               <h3 className="font-black text-slate-900 text-sm group-hover:text-[#006B4D] transition-colors">{brand.name}</h3>
               <span className="text-[11px] font-bold text-slate-400 mt-0.5">{brand.count}</span>
@@ -421,9 +439,9 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           
-          <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all space-y-4">
-            <div className="w-14 h-14 rounded-2xl bg-[#E6F4EF] text-[#006B4D] flex items-center justify-center font-bold">
-              <ShieldCheck className="w-7 h-7" />
+          <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all space-y-4 hover:-translate-y-1">
+            <div className="w-16 h-16 rounded-2xl bg-[#E6F4EF] p-3 flex items-center justify-center">
+              <img src="/images/wideAngleIcon.cf64df81.svg" alt="360 Inspection" className="w-full h-full object-contain" />
             </div>
             <h3 className="text-lg font-black text-slate-900">فحص فني معتمد 360°</h3>
             <p className="text-xs text-slate-500 leading-relaxed font-semibold">
@@ -431,9 +449,9 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all space-y-4">
-            <div className="w-14 h-14 rounded-2xl bg-[#E6F4EF] text-[#006B4D] flex items-center justify-center font-bold">
-              <FileCheck2 className="w-7 h-7" />
+          <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all space-y-4 hover:-translate-y-1">
+            <div className="w-16 h-16 rounded-2xl bg-[#E6F4EF] p-3 flex items-center justify-center">
+              <img src="/images/assuranceIcon.79e10b1f.svg" alt="Official Guarantee" className="w-full h-full object-contain" />
             </div>
             <h3 className="text-lg font-black text-slate-900">عقود رقمية وربط ضريبي ETA</h3>
             <p className="text-xs text-slate-500 leading-relaxed font-semibold">
@@ -441,9 +459,9 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all space-y-4">
-            <div className="w-14 h-14 rounded-2xl bg-[#E6F4EF] text-[#006B4D] flex items-center justify-center font-bold">
-              <Zap className="w-7 h-7" />
+          <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all space-y-4 hover:-translate-y-1">
+            <div className="w-16 h-16 rounded-2xl bg-[#E6F4EF] p-3 flex items-center justify-center">
+              <img src="/images/truckIcon.64c6c40a.svg" alt="Express Delivery" className="w-full h-full object-contain" />
             </div>
             <h3 className="text-lg font-black text-slate-900">استلام فوري وتوصيل لباب بيتك</h3>
             <p className="text-xs text-slate-500 leading-relaxed font-semibold">
@@ -451,9 +469,9 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all space-y-4">
-            <div className="w-14 h-14 rounded-2xl bg-[#E6F4EF] text-[#006B4D] flex items-center justify-center font-bold">
-              <Award className="w-7 h-7" />
+          <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-all space-y-4 hover:-translate-y-1">
+            <div className="w-16 h-16 rounded-2xl bg-[#E6F4EF] p-3 flex items-center justify-center">
+              <img src="/images/moneyIcon.82021139.svg" alt="Deposit Exemption" className="w-full h-full object-contain" />
             </div>
             <h3 className="text-lg font-black text-slate-900">إعفاء من التأمين النقدي</h3>
             <p className="text-xs text-slate-500 leading-relaxed font-semibold">
@@ -467,9 +485,18 @@ export default function HomePage() {
       {/* 6. Step-by-Step: "كيف يعمل مشوار؟" */}
       <section className="py-16 bg-[#F1F5F9]/70 border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-xl mx-auto mb-12">
+          <div className="text-center max-w-xl mx-auto mb-10">
             <h2 className="text-2xl md:text-3xl font-black text-slate-900">3 خطوات بسيطة لبدء رحلتك</h2>
             <p className="text-xs text-slate-500 mt-1">رحلة استئجار إلكترونية سلسة بنسبة 100%</p>
+          </div>
+
+          {/* Workflow Graphic Banner */}
+          <div className="max-w-3xl mx-auto mb-12 flex justify-center">
+            <img 
+              src="/images/steps.webp" 
+              alt="خطوات مشوار" 
+              className="w-full max-h-48 object-contain drop-shadow-md rounded-2xl" 
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center relative">

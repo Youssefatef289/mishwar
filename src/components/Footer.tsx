@@ -40,6 +40,19 @@ export default function Footer() {
                 <span>جمهورية مصر العربية</span>
               </span>
             </div>
+
+            {/* Social Media Links */}
+            <div className="flex items-center gap-3 pt-3">
+              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-xl bg-white/5 hover:bg-[#006B4D] border border-white/10 flex items-center justify-center transition-all">
+                <img src="/images/facebookLogo.7fe86659.svg" alt="Facebook" className="w-4 h-4 brightness-200" />
+              </a>
+              <a href="https://instagram.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-xl bg-white/5 hover:bg-[#006B4D] border border-white/10 flex items-center justify-center transition-all">
+                <img src="/images/InstagramLogo.e8fd0abd.svg" alt="Instagram" className="w-4 h-4 brightness-200" />
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="w-9 h-9 rounded-xl bg-white/5 hover:bg-[#006B4D] border border-white/10 flex items-center justify-center transition-all">
+                <img src="/images/linkedinLogo.dfd9aafc.svg" alt="LinkedIn" className="w-4 h-4 brightness-200" />
+              </a>
+            </div>
           </div>
 
           {/* Quick Links */}

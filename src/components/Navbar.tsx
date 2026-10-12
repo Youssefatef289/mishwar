@@ -73,7 +73,19 @@ export default function Navbar() {
                   isActive('/fleet') ? 'text-[#006B4D] bg-[#E6F4EF]' : 'text-slate-600 hover:text-[#006B4D] hover:bg-slate-50'
                 }`}
               >
-                تصفح السيارات
+                تصفح الأسطول
+              </Link>
+              <Link 
+                href="/#latest-additions" 
+                className="px-3.5 py-2 rounded-xl text-sm font-bold text-slate-600 hover:text-[#006B4D] hover:bg-slate-50 transition-all"
+              >
+                أحدث الإضافات
+              </Link>
+              <Link 
+                href="/#why-choose-us" 
+                className="px-3.5 py-2 rounded-xl text-sm font-bold text-slate-600 hover:text-[#006B4D] hover:bg-slate-50 transition-all"
+              >
+                ليه مشوار؟
               </Link>
 
               {/* Renter Specific */}

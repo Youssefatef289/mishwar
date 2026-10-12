@@ -120,7 +120,7 @@ export default function Footer() {
         {/* Bottom Simple Bar ("سطر بسيط") */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-semibold text-slate-400">
           <div>
-            <p>© {new Date().getFullYear()} مشوار لتقنية المعلومات والنقل الذكي ش.م.م. جميع الحقوق محفوظة.</p>
+            <p>© 2026 مشوار لتقنية المعلومات والنقل الذكي ش.م.م. جميع الحقوق محفوظة.</p>
           </div>
 
           <div className="flex items-center gap-6 text-[11px]">
@@ -136,3 +136,4 @@ export default function Footer() {
     </footer>
   );
 }
+

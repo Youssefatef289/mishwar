@@ -6,7 +6,8 @@ import {
   Car as CarIcon, Search, ShieldCheck, MapPin, Calendar, Star, 
   ArrowLeft, CheckCircle2, Sparkles, Building2, Clock, PhoneCall, 
   FileCheck2, KeyRound, Award, Fuel, Gauge, SlidersHorizontal, 
-  ChevronLeft, ArrowUpRight, Zap, Check 
+  ChevronLeft, ArrowUpRight, Zap, Check, ChevronDown, ChevronUp,
+  CalendarCheck, CreditCard
 } from 'lucide-react';
 import { initStorage, getFleet, getUsers, Car, User } from '@/utils/storage';
 
@@ -14,6 +15,7 @@ export default function HomePage() {
   const router = useRouter();
   const [featuredCars, setFeaturedCars] = useState<Car[]>([]);
   const [dealers, setDealers] = useState<User[]>([]);
+  const [showAllBrands, setShowAllBrands] = useState(false);
 
   // Search filter states
   const [rentalType, setRentalType] = useState<'self' | 'chauffeur'>('self');
@@ -47,20 +49,24 @@ export default function HomePage() {
     router.push(`/fleet?${params.toString()}`);
   };
 
-  // Top Global Brands list with real WebP logos
-  const topBrands = [
-    { name: 'مرسيدس-بنز', en: 'Mercedes', count: '54 سيارة', logo: '/images/Mercedes-Benz.webp' },
-    { name: 'بي إم دبليو', en: 'BMW', count: '42 سيارة', logo: '/images/BMW.webp' },
-    { name: 'هيونداي', en: 'Hyundai', count: '83 سيارة', logo: '/images/Hyundai.webp' },
-    { name: 'كيا', en: 'Kia', count: '61 سيارة', logo: '/images/Kia.webp' },
-    { name: 'نيسان', en: 'Nissan', count: '45 سيارة', logo: '/images/Nissan.webp' },
-    { name: 'بيجو', en: 'Peugeot', count: '38 سيارة', logo: '/images/Peugeot.webp' },
-    { name: 'رينو', en: 'Renault', count: '29 سيارة', logo: '/images/Renault.webp' },
-    { name: 'فولكس فاجن', en: 'Volkswagen', count: '31 سيارة', logo: '/images/Volkswagen.webp' },
-    { name: 'جيب', en: 'Jeep', count: '24 سيارة', logo: '/images/Jeep.webp' },
-    { name: 'إم جي', en: 'MG', count: '47 سيارة', logo: '/images/MG.webp' },
-    { name: 'ستروين', en: 'Citroen', count: '22 سيارة', logo: '/images/Citroen.webp' },
-    { name: 'أوبل', en: 'Opel', count: '18 سيارة', logo: '/images/Opel.webp' },
+  // Primary 6 Brands matching Screenshot 3
+  const primaryBrands = [
+    { name: 'مرسيدس', en: 'Mercedes', logo: '/images/Mercedes-Benz.webp' },
+    { name: 'رينو', en: 'Renault', logo: '/images/Renault.webp' },
+    { name: 'ب م دبليو', en: 'BMW', logo: '/images/BMW.webp' },
+    { name: 'أوبل', en: 'Opel', logo: '/images/Opel.webp' },
+    { name: 'بيجو', en: 'Peugeot', logo: '/images/Peugeot.webp' },
+    { name: 'نيسان', en: 'Nissan', logo: '/images/Nissan.webp' },
+  ];
+
+  // Extra Brands revealed on "شاهد المزيد"
+  const extraBrands = [
+    { name: 'هيونداي', en: 'Hyundai', logo: '/images/Hyundai.webp' },
+    { name: 'كيا', en: 'Kia', logo: '/images/Kia.webp' },
+    { name: 'فولكس فاجن', en: 'Volkswagen', logo: '/images/Volkswagen.webp' },
+    { name: 'جيب', en: 'Jeep', logo: '/images/Jeep.webp' },
+    { name: 'إم جي', en: 'MG', logo: '/images/MG.webp' },
+    { name: 'ستروين', en: 'Citroen', logo: '/images/Citroen.webp' },
   ];
 
   return (
@@ -275,39 +281,261 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 3. Brand Discovery Grid (Sylndr Style Car Brands) */}
-      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="flex justify-between items-end mb-8">
-          <div>
-            <span className="text-xs font-black text-[#006B4D] bg-[#E6F4EF] px-3 py-1 rounded-full mb-2 inline-block">
-              تصفح سريع ومباشر
-            </span>
-            <h2 className="text-2xl md:text-3xl font-black text-slate-900">تصفح حسب الماركة الأكثر طلباً</h2>
+      {/* 2. Guaranteed Section: "مشوار مضمون!" (Matching Screenshot 2) */}
+      <section className="py-12 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="bg-white rounded-3xl md:rounded-[2.5rem] p-6 sm:p-10 md:p-16 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-12">
+          
+          {/* Background Decorative Emerald Rhombus Elements matching Sylndr */}
+          <div className="absolute left-6 top-0 bottom-0 w-2/5 pointer-events-none opacity-90 hidden md:block select-none">
+            <div className="absolute top-6 left-16 w-24 h-32 bg-[#00B569] transform -skew-x-12 rounded-xl"></div>
+            <div className="absolute bottom-6 left-6 w-24 h-32 bg-[#00B569] transform -skew-x-12 rounded-xl"></div>
+            <div className="absolute top-24 left-48 w-32 h-24 bg-[#00B569] transform -skew-x-12 rounded-xl"></div>
           </div>
-          <Link href="/fleet" className="text-xs md:text-sm font-bold text-[#006B4D] hover:underline flex items-center gap-1">
-            <span>عرض كل الماركات (18+ ماركة)</span>
-            <ArrowLeft className="w-4 h-4" />
-          </Link>
+
+          {/* Left: Two Cars Graphic */}
+          <div className="relative z-10 w-full md:w-1/2 flex items-center justify-center">
+            <img 
+              src="/images/mishwar-guaranteed-cars.webp" 
+              alt="مشوار مضمون" 
+              className="w-full max-h-72 object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500"
+            />
+          </div>
+
+          {/* Right: Text and Action Buttons */}
+          <div className="relative z-10 w-full md:w-1/2 text-right space-y-4">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+              مشوار مضمون!
+            </h2>
+            <p className="text-sm sm:text-base font-bold text-slate-600 leading-relaxed">
+              استأجر أو بيع عربية مستعملة بسهولة وآمان
+            </p>
+
+            <div className="flex flex-wrap items-center gap-3 pt-3">
+              <Link 
+                href="/fleet"
+                className="bg-[#00875A] hover:bg-[#006B4D] text-white font-bold text-sm sm:text-base px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all active:scale-95"
+              >
+                شراء عربية
+              </Link>
+              <Link 
+                href="/register"
+                className="bg-[#0A2540] hover:bg-[#06182A] text-white font-bold text-sm sm:text-base px-8 py-3 rounded-xl shadow-md hover:shadow-lg transition-all active:scale-95"
+              >
+                بيع عربيتك
+              </Link>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 3. How It Works: "ازاي استأجر عربية من على مشوار ماركت؟" (Matching Screenshot 1) */}
+      <section className="py-12 md:py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <h2 className="text-2xl sm:text-4xl font-black text-[#006B4D] mb-2 tracking-tight">
+            ازاي استأجر عربية من على مشوار ماركت؟
+          </h2>
+          <p className="text-sm sm:text-base font-bold text-slate-700">
+            أضمن منصة عربيات في مصر
+          </p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4">
-          {topBrands.map((brand, idx) => (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          {/* Left: Interactive Card with Outline Icons and Car */}
+          <div className="lg:col-span-5 bg-[#EAF7F2] rounded-[2.5rem] p-6 sm:p-8 flex flex-col justify-between items-center relative overflow-hidden min-h-[380px] border border-[#A3D9C9]/50 shadow-sm">
+            {/* 3 Top Icons (Book, Test, Finance) */}
+            <div className="flex items-center justify-around w-full pt-2 px-2 z-10">
+              <div className="flex flex-col items-center gap-1.5 text-center">
+                <div className="w-14 h-14 rounded-2xl border-2 border-[#00B569] flex items-center justify-center text-[#00B569] bg-white/70 shadow-xs">
+                  <CalendarCheck className="w-7 h-7 stroke-[2.2]" />
+                </div>
+                <span className="text-xs font-bold text-[#006B4D]">Book</span>
+              </div>
+
+              <div className="flex flex-col items-center gap-1.5 text-center">
+                <div className="w-14 h-14 rounded-2xl border-2 border-[#00B569] flex items-center justify-center text-[#00B569] bg-white/70 shadow-xs">
+                  <Gauge className="w-7 h-7 stroke-[2.2]" />
+                </div>
+                <span className="text-xs font-bold text-[#006B4D]">Test</span>
+              </div>
+
+              <div className="flex flex-col items-center gap-1.5 text-center">
+                <div className="w-14 h-14 rounded-2xl border-2 border-[#00B569] flex items-center justify-center text-[#00B569] bg-white/70 shadow-xs">
+                  <CreditCard className="w-7 h-7 stroke-[2.2]" />
+                </div>
+                <span className="text-xs font-bold text-[#006B4D]">Finance</span>
+              </div>
+            </div>
+
+            {/* Bottom: Silver Sedan with Neon Ground Platform */}
+            <div className="relative w-full mt-6 flex justify-center items-end">
+              <img 
+                src="/images/how-it-works-car.webp" 
+                alt="عربية مشوار ماركت" 
+                className="w-full max-h-56 object-contain drop-shadow-md z-10 hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute bottom-2 left-1/4 right-1/4 h-3 bg-[#00E082] rounded-full blur-xs opacity-90"></div>
+            </div>
+          </div>
+
+          {/* Right: Vertical Process Steps */}
+          <div className="lg:col-span-7 flex flex-col justify-center pr-2 lg:pr-8">
+            <div className="relative space-y-8 pr-6 border-r-2 border-[#00B569]/30 mr-2">
+              
+              {/* Step 1 */}
+              <div className="relative group">
+                <div className="absolute -right-[31px] top-1.5 w-4 h-4 rounded-full bg-[#00B569] ring-4 ring-[#E6F4EF]"></div>
+                <h3 className="text-lg sm:text-xl font-black text-slate-900 mb-1">
+                  اختار العربية المناسبة من على مشوار ماركت
+                </h3>
+                <p className="text-xs sm:text-sm font-semibold text-slate-500">
+                  كل العربيات المعروضة معاها تقرير فحص شامل
+                </p>
+              </div>
+
+              {/* Step 2 */}
+              <div className="relative group">
+                <div className="absolute -right-[31px] top-1.5 w-4 h-4 rounded-full bg-[#00B569] ring-4 ring-[#E6F4EF]"></div>
+                <h3 className="text-lg sm:text-xl font-black text-slate-900 mb-1">
+                  ابعت عرض السعر المناسب
+                </h3>
+                <p className="text-xs sm:text-sm font-semibold text-slate-500">
+                  اختار تكون مشتري جاد عشان تشتري العربية أسرع
+                </p>
+              </div>
+
+              {/* Step 3 */}
+              <div className="relative group">
+                <div className="absolute -right-[31px] top-1.5 w-4 h-4 rounded-full bg-[#00B569] ring-4 ring-[#E6F4EF]"></div>
+                <h3 className="text-lg sm:text-xl font-black text-slate-900 mb-1">
+                  خطط تمويل مختلفة تناسب جميع الأشخاص
+                </h3>
+                <p className="text-xs sm:text-sm font-semibold text-slate-500">
+                  ادفع كاش أو بالتقسيط من خلال مشوار كاش
+                </p>
+              </div>
+
+            </div>
+
+            {/* CTA Button */}
+            <div className="mt-8 pr-6">
+              <Link 
+                href="/fleet"
+                className="inline-block bg-[#00875A] hover:bg-[#006B4D] text-white font-bold text-sm sm:text-base px-10 py-3 rounded-xl shadow-md hover:shadow-lg transition-all active:scale-95"
+              >
+                اعرف المزيد
+              </Link>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 4. Sell Your Car Banner: "بيع عربيتك" (Matching Screenshot 3 Top) */}
+      <section className="py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="bg-[#EBF0FA] rounded-3xl p-6 sm:p-8 md:p-10 flex flex-col-reverse md:flex-row items-center justify-between gap-8 border border-slate-200/60 shadow-sm overflow-hidden">
+          
+          {/* Left: Fiat Tipo Car Graphic */}
+          <div className="relative w-full md:w-1/2 flex flex-col items-center justify-center">
+            <img 
+              src="/images/fiat-tipo-featured.webp" 
+              alt="بيع عربيتك مع مشوار" 
+              className="w-full max-h-56 object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500"
+            />
+            {/* Dark Navy Pedestal Bar */}
+            <div className="w-3/5 h-2.5 bg-[#0A2540] rounded-full -mt-2 opacity-80"></div>
+          </div>
+
+          {/* Right: Text & Action */}
+          <div className="w-full md:w-1/2 text-right space-y-3">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900">
+              بيع عربيتك
+            </h2>
+            <p className="text-xs sm:text-sm font-bold text-slate-600">
+              بأحسن سعر، بدون فصال، بأسهل إجراءات
+            </p>
+            <div className="pt-2">
+              <Link 
+                href="/register"
+                className="inline-block bg-[#0A2540] hover:bg-[#06182A] text-white font-bold text-sm px-8 py-2.5 rounded-xl shadow-md transition-all active:scale-95"
+              >
+                بيع عربيتك
+              </Link>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 5. Most Popular Brands: "أشهر الماركات" (Matching Screenshot 3 Bottom) */}
+      <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl sm:text-3xl font-black text-[#006B4D]">
+            أشهر الماركات
+          </h2>
+        </div>
+
+        {/* 6 Primary Brand Cards matching Image 3 */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          {primaryBrands.map((brand, idx) => (
             <Link
               key={idx}
               href={`/fleet?brand=${brand.en}`}
-              className="bg-white p-5 rounded-3xl border border-slate-100 hover:border-[#006B4D]/40 shadow-sm hover:shadow-md transition-all group flex flex-col items-center text-center justify-center cursor-pointer hover:-translate-y-1 duration-200"
+              className="bg-white p-5 rounded-2xl border border-slate-200/90 hover:border-[#006B4D]/40 shadow-xs hover:shadow-md transition-all group flex flex-col items-center justify-center text-center cursor-pointer hover:-translate-y-1 duration-200"
             >
-              <div className="w-16 h-16 rounded-2xl bg-slate-50 group-hover:bg-[#E6F4EF] flex items-center justify-center p-2.5 mb-3 transition-colors border border-slate-100">
+              <div className="w-16 h-16 rounded-xl flex items-center justify-center p-2 mb-2 transition-transform group-hover:scale-110">
                 <img 
                   src={brand.logo} 
                   alt={brand.name} 
-                  className="w-full h-full object-contain filter group-hover:scale-110 transition-transform duration-300" 
+                  className="w-full h-full object-contain" 
                 />
               </div>
-              <h3 className="font-black text-slate-900 text-sm group-hover:text-[#006B4D] transition-colors">{brand.name}</h3>
-              <span className="text-[11px] font-bold text-slate-400 mt-0.5">{brand.count}</span>
+              <h3 className="font-bold text-slate-800 text-xs sm:text-sm group-hover:text-[#006B4D] transition-colors">
+                {brand.name}
+              </h3>
             </Link>
           ))}
+        </div>
+
+        {/* Extra Brands (Toggled via "شاهد المزيد") */}
+        {showAllBrands && (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mt-4 animate-in fade-in duration-300">
+            {extraBrands.map((brand, idx) => (
+              <Link
+                key={idx}
+                href={`/fleet?brand=${brand.en}`}
+                className="bg-white p-5 rounded-2xl border border-slate-200/90 hover:border-[#006B4D]/40 shadow-xs hover:shadow-md transition-all group flex flex-col items-center justify-center text-center cursor-pointer hover:-translate-y-1 duration-200"
+              >
+                <div className="w-16 h-16 rounded-xl flex items-center justify-center p-2 mb-2 transition-transform group-hover:scale-110">
+                  <img 
+                    src={brand.logo} 
+                    alt={brand.name} 
+                    className="w-full h-full object-contain" 
+                  />
+                </div>
+                <h3 className="font-bold text-slate-800 text-xs sm:text-sm group-hover:text-[#006B4D] transition-colors">
+                  {brand.name}
+                </h3>
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {/* "شاهد المزيد" Dropdown Button */}
+        <div className="flex justify-center mt-6">
+          <button
+            type="button"
+            onClick={() => setShowAllBrands(!showAllBrands)}
+            className="flex items-center gap-1 text-xs sm:text-sm font-bold text-[#006B4D] hover:text-[#00533C] transition-colors py-2 px-4 rounded-full hover:bg-[#E6F4EF]"
+          >
+            <span>{showAllBrands ? 'عرض أقل' : 'شاهد المزيد'}</span>
+            {showAllBrands ? (
+              <ChevronUp className="w-4 h-4 text-[#006B4D]" />
+            ) : (
+              <ChevronDown className="w-4 h-4 text-[#006B4D]" />
+            )}
+          </button>
         </div>
       </section>
 
@@ -482,187 +710,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. Guaranteed Section: "مشوار مضمون!" (Pixel-Perfect Replica of Uploaded Image) */}
-      <section className="py-20 bg-white border-y border-slate-100 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-16">
-            
-            {/* Left Column: Graphic Cars with Green Geometrics */}
-            <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
-              <div className="relative max-w-xl w-full">
-                <img 
-                  src="/images/mishwar-guaranteed-cars.webp" 
-                  alt="مشوار مضمون" 
-                  className="w-full h-auto object-contain hover:scale-105 transition-transform duration-500 drop-shadow-md"
-                />
-              </div>
-            </div>
 
-            {/* Right Column: Title, Subtitle and Action Buttons */}
-            <div className="w-full lg:w-1/2 text-right space-y-6">
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
-                مشوار مضمون!
-              </h2>
-              <p className="text-lg sm:text-xl font-bold text-slate-600 leading-relaxed">
-                اشتري أو استأجر أو بيع عربية بسهولة وآمان
-              </p>
-
-              {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
-                <Link
-                  href="/fleet"
-                  className="bg-[#00965E] hover:bg-[#007F4F] text-white px-8 py-3.5 rounded-xl font-black text-sm sm:text-base shadow-sm hover:shadow-md transition-all active:scale-95 text-center min-w-[150px]"
-                >
-                  شراء / تأجير عربية
-                </Link>
-                <Link
-                  href="/register"
-                  className="bg-[#0B2545] hover:bg-[#07192F] text-white px-8 py-3.5 rounded-xl font-black text-sm sm:text-base shadow-sm hover:shadow-md transition-all active:scale-95 text-center min-w-[150px]"
-                >
-                  بيع عربيتك
-                </Link>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* 7. How To Buy / Rent Section: "ازاي اشتري أو تأجر عربية من على مشوار؟" (Pixel-Perfect Replica of Uploaded Image) */}
-      <section className="py-20 bg-[#FAFCFB] border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* Section Heading */}
-          <div className="text-center max-w-2xl mx-auto mb-14">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#00965E] tracking-tight">
-              ازاي اشتري أو تأجر عربية من على مشوار ماركت؟
-            </h2>
-            <p className="text-sm sm:text-base font-bold text-slate-500 mt-2">
-              أضمن منصة عربيات في مصر
-            </p>
-          </div>
-
-          <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-16">
-            
-            {/* Left Card: Pale Mint Rounded Container with Car & Icons */}
-            <div className="w-full lg:w-1/2 flex justify-center">
-              <div className="w-full bg-[#EDF7F4] rounded-[2.5rem] p-6 sm:p-10 lg:p-12 flex items-center justify-center border border-[#D5EFE6]/80 shadow-sm">
-                <img 
-                  src="/images/how-it-works-car.webp" 
-                  alt="خطوات مشوار" 
-                  className="w-full max-h-[320px] object-contain drop-shadow-sm hover:scale-102 transition-transform duration-300"
-                />
-              </div>
-            </div>
-
-            {/* Right Stepper: 3 Connected Points & CTA */}
-            <div className="w-full lg:w-1/2 text-right">
-              <div className="relative pl-0 pr-4 sm:pr-6 space-y-10">
-                
-                {/* Vertical Connecting Line */}
-                <div className="absolute top-4 bottom-4 right-[25px] sm:right-[33px] w-0.5 bg-[#A3D9C9]/60 -z-0"></div>
-
-                {/* Step 1 */}
-                <div className="relative flex items-start gap-4 sm:gap-5 z-10">
-                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#EDF7F4] border-2 border-[#00965E] flex items-center justify-center shrink-0 mt-1 shadow-sm">
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#00965E]"></div>
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="text-base sm:text-lg font-black text-slate-900">
-                      اختار العربية المناسبة من على مشوار ماركت
-                    </h3>
-                    <p className="text-xs sm:text-sm font-semibold text-slate-500 leading-relaxed">
-                      كل العربيات المعروضة معاها تقرير فحص شامل
-                    </p>
-                  </div>
-                </div>
-
-                {/* Step 2 */}
-                <div className="relative flex items-start gap-4 sm:gap-5 z-10">
-                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#EDF7F4] border-2 border-[#00965E] flex items-center justify-center shrink-0 mt-1 shadow-sm">
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#00965E]"></div>
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="text-base sm:text-lg font-black text-slate-900">
-                      ابعت عرض السعر المناسب
-                    </h3>
-                    <p className="text-xs sm:text-sm font-semibold text-slate-500 leading-relaxed">
-                      اختار تكون مشتري جاد عشان تشتري العربية أسرع
-                    </p>
-                  </div>
-                </div>
-
-                {/* Step 3 */}
-                <div className="relative flex items-start gap-4 sm:gap-5 z-10">
-                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#EDF7F4] border-2 border-[#00965E] flex items-center justify-center shrink-0 mt-1 shadow-sm">
-                    <div className="w-2.5 h-2.5 rounded-full bg-[#00965E]"></div>
-                  </div>
-                  <div className="space-y-1">
-                    <h3 className="text-base sm:text-lg font-black text-slate-900">
-                      خطط تمويل وتأجير مختلفة تناسب جميع الأشخاص
-                    </h3>
-                    <p className="text-xs sm:text-sm font-semibold text-slate-500 leading-relaxed">
-                      ادفع كاش أو بالتقسيط من خلال مشوار سويفت
-                    </p>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Action CTA Button */}
-              <div className="mt-8 pr-10 sm:pr-14">
-                <Link
-                  href="/fleet"
-                  className="bg-[#00965E] hover:bg-[#007F4F] text-white px-9 py-3 rounded-xl font-black text-sm shadow-sm hover:shadow-md transition-all active:scale-95 inline-block"
-                >
-                  اعرف المزيد
-                </Link>
-              </div>
-
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* 8. Spotlight Banner: Fiat Tipo 2024 Showcase (Using Uploaded Fiat Tipo Asset) */}
-      <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="bg-gradient-to-l from-[#0B132B] via-[#0F1E36] to-[#0B132B] rounded-3xl p-6 sm:p-10 text-white flex flex-col lg:flex-row items-center justify-between gap-8 border border-slate-800 shadow-xl overflow-hidden relative">
-          
-          <div className="space-y-4 max-w-xl text-right z-10">
-            <span className="bg-[#00965E] text-white px-3.5 py-1 rounded-full text-xs font-black inline-block">
-              عرض الأسبوع الأكثر طلباً
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-black leading-snug">
-              فيات تيبو 2024 الجديدة كلياً.. فحص معتمد 85 نقطة واستلام فوري!
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
-              توفير فائق في استهلاك الوقود، تأمين شامل مجاني، وإعفاء من التأمين النقدي لجميع العملاء الموثقين.
-            </p>
-            <div className="flex flex-wrap items-center gap-4 pt-2">
-              <Link 
-                href="/fleet/car_fiat_tipo" 
-                className="bg-[#00965E] hover:bg-[#007F4F] text-white px-6 py-3 rounded-xl text-xs font-black transition-all shadow-md active:scale-95 flex items-center gap-2"
-              >
-                <span>احجز فيات تيبو الآن</span>
-                <ArrowLeft className="w-4 h-4" />
-              </Link>
-              <div className="text-right">
-                <span className="text-[11px] text-slate-400 block font-semibold">ابتداءً من:</span>
-                <span className="text-xl font-black text-[#10B981]">1,950 ج.م / يوم</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="max-w-md w-full flex justify-center z-10">
-            <img 
-              src="/images/fiat-tipo-featured.webp" 
-              alt="فيات تيبو 2024" 
-              className="w-full max-h-56 object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-        </div>
-      </section>
 
       {/* 7. Dealership Partners */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">

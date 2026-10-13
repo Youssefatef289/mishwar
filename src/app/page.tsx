@@ -482,53 +482,184 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. Step-by-Step: "كيف يعمل مشوار؟" */}
-      <section className="py-16 bg-[#F1F5F9]/70 border-y border-slate-200">
+      {/* 6. Guaranteed Section: "مشوار مضمون!" (Pixel-Perfect Replica of Uploaded Image) */}
+      <section className="py-20 bg-white border-y border-slate-100 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-xl mx-auto mb-10">
-            <h2 className="text-2xl md:text-3xl font-black text-slate-900">3 خطوات بسيطة لبدء رحلتك</h2>
-            <p className="text-xs text-slate-500 mt-1">رحلة استئجار إلكترونية سلسة بنسبة 100%</p>
+          <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-16">
+            
+            {/* Left Column: Graphic Cars with Green Geometrics */}
+            <div className="w-full lg:w-1/2 flex justify-center lg:justify-start">
+              <div className="relative max-w-xl w-full">
+                <img 
+                  src="/images/mishwar-guaranteed-cars.webp" 
+                  alt="مشوار مضمون" 
+                  className="w-full h-auto object-contain hover:scale-105 transition-transform duration-500 drop-shadow-md"
+                />
+              </div>
+            </div>
+
+            {/* Right Column: Title, Subtitle and Action Buttons */}
+            <div className="w-full lg:w-1/2 text-right space-y-6">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
+                مشوار مضمون!
+              </h2>
+              <p className="text-lg sm:text-xl font-bold text-slate-600 leading-relaxed">
+                اشتري أو استأجر أو بيع عربية بسهولة وآمان
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-4 pt-2">
+                <Link
+                  href="/fleet"
+                  className="bg-[#00965E] hover:bg-[#007F4F] text-white px-8 py-3.5 rounded-xl font-black text-sm sm:text-base shadow-sm hover:shadow-md transition-all active:scale-95 text-center min-w-[150px]"
+                >
+                  شراء / تأجير عربية
+                </Link>
+                <Link
+                  href="/register"
+                  className="bg-[#0B2545] hover:bg-[#07192F] text-white px-8 py-3.5 rounded-xl font-black text-sm sm:text-base shadow-sm hover:shadow-md transition-all active:scale-95 text-center min-w-[150px]"
+                >
+                  بيع عربيتك
+                </Link>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 7. How To Buy / Rent Section: "ازاي اشتري أو تأجر عربية من على مشوار؟" (Pixel-Perfect Replica of Uploaded Image) */}
+      <section className="py-20 bg-[#FAFCFB] border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {/* Section Heading */}
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-[#00965E] tracking-tight">
+              ازاي اشتري أو تأجر عربية من على مشوار ماركت؟
+            </h2>
+            <p className="text-sm sm:text-base font-bold text-slate-500 mt-2">
+              أضمن منصة عربيات في مصر
+            </p>
           </div>
 
-          {/* Workflow Graphic Banner */}
-          <div className="max-w-3xl mx-auto mb-12 flex justify-center">
+          <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-10 lg:gap-16">
+            
+            {/* Left Card: Pale Mint Rounded Container with Car & Icons */}
+            <div className="w-full lg:w-1/2 flex justify-center">
+              <div className="w-full bg-[#EDF7F4] rounded-[2.5rem] p-6 sm:p-10 lg:p-12 flex items-center justify-center border border-[#D5EFE6]/80 shadow-sm">
+                <img 
+                  src="/images/how-it-works-car.webp" 
+                  alt="خطوات مشوار" 
+                  className="w-full max-h-[320px] object-contain drop-shadow-sm hover:scale-102 transition-transform duration-300"
+                />
+              </div>
+            </div>
+
+            {/* Right Stepper: 3 Connected Points & CTA */}
+            <div className="w-full lg:w-1/2 text-right">
+              <div className="relative pl-0 pr-4 sm:pr-6 space-y-10">
+                
+                {/* Vertical Connecting Line */}
+                <div className="absolute top-4 bottom-4 right-[25px] sm:right-[33px] w-0.5 bg-[#A3D9C9]/60 -z-0"></div>
+
+                {/* Step 1 */}
+                <div className="relative flex items-start gap-4 sm:gap-5 z-10">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#EDF7F4] border-2 border-[#00965E] flex items-center justify-center shrink-0 mt-1 shadow-sm">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#00965E]"></div>
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-base sm:text-lg font-black text-slate-900">
+                      اختار العربية المناسبة من على مشوار ماركت
+                    </h3>
+                    <p className="text-xs sm:text-sm font-semibold text-slate-500 leading-relaxed">
+                      كل العربيات المعروضة معاها تقرير فحص شامل
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 2 */}
+                <div className="relative flex items-start gap-4 sm:gap-5 z-10">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#EDF7F4] border-2 border-[#00965E] flex items-center justify-center shrink-0 mt-1 shadow-sm">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#00965E]"></div>
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-base sm:text-lg font-black text-slate-900">
+                      ابعت عرض السعر المناسب
+                    </h3>
+                    <p className="text-xs sm:text-sm font-semibold text-slate-500 leading-relaxed">
+                      اختار تكون مشتري جاد عشان تشتري العربية أسرع
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 3 */}
+                <div className="relative flex items-start gap-4 sm:gap-5 z-10">
+                  <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#EDF7F4] border-2 border-[#00965E] flex items-center justify-center shrink-0 mt-1 shadow-sm">
+                    <div className="w-2.5 h-2.5 rounded-full bg-[#00965E]"></div>
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-base sm:text-lg font-black text-slate-900">
+                      خطط تمويل وتأجير مختلفة تناسب جميع الأشخاص
+                    </h3>
+                    <p className="text-xs sm:text-sm font-semibold text-slate-500 leading-relaxed">
+                      ادفع كاش أو بالتقسيط من خلال مشوار سويفت
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Action CTA Button */}
+              <div className="mt-8 pr-10 sm:pr-14">
+                <Link
+                  href="/fleet"
+                  className="bg-[#00965E] hover:bg-[#007F4F] text-white px-9 py-3 rounded-xl font-black text-sm shadow-sm hover:shadow-md transition-all active:scale-95 inline-block"
+                >
+                  اعرف المزيد
+                </Link>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 8. Spotlight Banner: Fiat Tipo 2024 Showcase (Using Uploaded Fiat Tipo Asset) */}
+      <section className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="bg-gradient-to-l from-[#0B132B] via-[#0F1E36] to-[#0B132B] rounded-3xl p-6 sm:p-10 text-white flex flex-col lg:flex-row items-center justify-between gap-8 border border-slate-800 shadow-xl overflow-hidden relative">
+          
+          <div className="space-y-4 max-w-xl text-right z-10">
+            <span className="bg-[#00965E] text-white px-3.5 py-1 rounded-full text-xs font-black inline-block">
+              عرض الأسبوع الأكثر طلباً
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-black leading-snug">
+              فيات تيبو 2024 الجديدة كلياً.. فحص معتمد 85 نقطة واستلام فوري!
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-medium">
+              توفير فائق في استهلاك الوقود، تأمين شامل مجاني، وإعفاء من التأمين النقدي لجميع العملاء الموثقين.
+            </p>
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <Link 
+                href="/fleet/car_fiat_tipo" 
+                className="bg-[#00965E] hover:bg-[#007F4F] text-white px-6 py-3 rounded-xl text-xs font-black transition-all shadow-md active:scale-95 flex items-center gap-2"
+              >
+                <span>احجز فيات تيبو الآن</span>
+                <ArrowLeft className="w-4 h-4" />
+              </Link>
+              <div className="text-right">
+                <span className="text-[11px] text-slate-400 block font-semibold">ابتداءً من:</span>
+                <span className="text-xl font-black text-[#10B981]">1,950 ج.م / يوم</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="max-w-md w-full flex justify-center z-10">
             <img 
-              src="/images/steps.webp" 
-              alt="خطوات مشوار" 
-              className="w-full max-h-48 object-contain drop-shadow-md rounded-2xl" 
+              src="/images/fiat-tipo-featured.webp" 
+              alt="فيات تيبو 2024" 
+              className="w-full max-h-56 object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-500"
             />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center relative">
-            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-3">
-              <div className="w-12 h-12 rounded-full bg-[#006B4D] text-white flex items-center justify-center font-black mx-auto text-lg shadow-md">
-                1
-              </div>
-              <h3 className="text-base font-black text-slate-900">اختر سيارتك وقارن المواصفات</h3>
-              <p className="text-xs text-slate-500 font-semibold leading-relaxed">
-                تصفح الأسطول الحقيقي المتاح، واطلع على صور الفحص الفني والأسعار الشاملة للضريبة.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-3">
-              <div className="w-12 h-12 rounded-full bg-[#006B4D] text-white flex items-center justify-center font-black mx-auto text-lg shadow-md">
-                2
-              </div>
-              <h3 className="text-base font-black text-slate-900">وثّق هويتك ووقّع العقد الرقمي</h3>
-              <p className="text-xs text-slate-500 font-semibold leading-relaxed">
-                أدخل بياناتك الوطنية وادفع بأمان عبر ميزة أو انستاباي واحصل على نسختك المعتمدة فوراً.
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm space-y-3">
-              <div className="w-12 h-12 rounded-full bg-[#006B4D] text-white flex items-center justify-center font-black mx-auto text-lg shadow-md">
-                3
-              </div>
-              <h3 className="text-base font-black text-slate-900">استلم مفتاحك وانطلق</h3>
-              <p className="text-xs text-slate-500 font-semibold leading-relaxed">
-                استلم سيارتك بعد محضر الاستلام الرقمي 360° وتتبع مسارها ومستوى الوقود لحظياً.
-              </p>
-            </div>
           </div>
         </div>
       </section>

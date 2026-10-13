@@ -247,6 +247,29 @@ const INITIAL_FLEET: Car[] = [
     dealershipName: 'أحمد كمال (مالك P2P)',
     features: ['شاشة بانورامية مدمجة', 'كاميرات 360 درجة', 'شاحن لاسلكي وسقف بانوراما'],
     tags: ['اقتصادية وعملية', 'تأمين شامل']
+  },
+  {
+    id: 'car_fiat_tipo',
+    ownerId: 'host_ahmed',
+    brand: 'فيات',
+    model: 'تيبو سيدان',
+    year: 2024,
+    category: 'سيدان اقتصادية',
+    dailyPrice: 1950,
+    images: [
+      '/images/fiat-tipo-featured.webp'
+    ],
+    status: 'available',
+    mileageLimit: '300 كم/اليوم',
+    transmission: 'أوتوماتيك 6 سرعات',
+    fuel: 'بنزين 92',
+    seats: 5,
+    horsepower: '110 حصان',
+    rating: 4.8,
+    inspectionScore: 97,
+    dealershipName: 'أحمد كمال (مالك P2P)',
+    features: ['شاشة لمس مع Apple CarPlay', 'مثبت سرعة', 'كاميرا خلفية وحساسات ركن', 'موفرة جداً في استهلاك الوقود'],
+    tags: ['اقتصادية وعملية', 'فحص معتمد', 'تسليم فوري']
   }
 ];
 

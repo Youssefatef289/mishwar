@@ -75,6 +75,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/dealer/dashboard" className="hover:text-[#10B981] transition-colors flex items-center gap-1">
+                  <span>بوابة ملاك الأساطيل والمعارض</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/chat" className="hover:text-[#10B981] transition-colors flex items-center gap-1">
                   <span>المحادثات المباشرة</span>
                 </Link>
@@ -82,50 +87,57 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Partners & Fleets */}
+          {/* Branches & Support */}
           <div className="space-y-3">
-            <h3 className="text-sm font-black text-white">الشركاء والمعارض</h3>
+            <h3 className="text-sm font-black text-white">الفروع والدعم 24/7</h3>
             <ul className="space-y-2 text-xs font-bold text-slate-400">
-              <li>
-                <Link href="/dealer/dashboard" className="hover:text-[#10B981] transition-colors">
-                  بوابة إدارة الأساطيل (معارض)
-                </Link>
+              <li className="flex items-center gap-2 text-[#10B981]">
+                <Phone className="w-4 h-4 shrink-0" />
+                <span className="font-extrabold text-sm" dir="ltr">الخط الساخن: 19854</span>
               </li>
-              <li>
-                <Link href="/dealer/contracts" className="hover:text-[#10B981] transition-colors">
-                  منظومة العقود والفاتورة ETA
-                </Link>
+              <li className="flex items-center gap-2">
+                <Phone className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                <span dir="ltr">+20 109 988 7766</span>
               </li>
-              <li>
-                <Link href="/host/dashboard" className="hover:text-[#10B981] transition-colors">
-                  انضم كمالك سيارة P2P
-                </Link>
+              <li className="flex items-center gap-2">
+                <Mail className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                <span>support@mishwar.eg</span>
               </li>
-              <li>
-                <Link href="/register" className="hover:text-[#10B981] transition-colors">
-                  تسجيل معرض جديد
-                </Link>
+              <li className="flex items-start gap-2 pt-1 text-[11px] text-slate-400">
+                <MapPin className="w-3.5 h-3.5 text-slate-500 shrink-0 mt-0.5" />
+                <span>القاهرة (التجمع الخامس) • الجيزة (الشيخ زايد) • الإسكندرية (لوران) • مطار القاهرة T3</span>
               </li>
             </ul>
           </div>
 
-          {/* Contact & Support */}
+          {/* Official Payments & ETA */}
           <div className="space-y-3">
-            <h3 className="text-sm font-black text-white">خدمة العملاء والفروع</h3>
-            <ul className="space-y-2.5 text-xs font-bold text-slate-400">
-              <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#10B981] shrink-0" />
-                <span dir="ltr">+20 109 988 7766</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-[#10B981] shrink-0" />
-                <span>support@mishwar.eg</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
-                <span>القاهرة الجديدة، التجمع الخامس • الشيخ زايد • مطار القاهرة T3</span>
-              </li>
-            </ul>
+            <h3 className="text-sm font-black text-white">طرق الدفع والتوثيق</h3>
+            <p className="text-xs text-slate-400 leading-relaxed font-medium">
+              دفع رسمي معتمد بعقود إلكترونية موحدة موثقة لحظياً.
+            </p>
+            
+            <div className="flex flex-wrap gap-2 pt-1">
+              <span className="bg-white/10 px-2.5 py-1 rounded-lg text-[11px] font-bold text-white border border-white/10">
+                ميزة Meeza
+              </span>
+              <span className="bg-white/10 px-2.5 py-1 rounded-lg text-[11px] font-bold text-white border border-white/10">
+                InstaPay
+              </span>
+              <span className="bg-white/10 px-2.5 py-1 rounded-lg text-[11px] font-bold text-white border border-white/10">
+                Visa / MasterCard
+              </span>
+              <span className="bg-white/10 px-2.5 py-1 rounded-lg text-[11px] font-bold text-white border border-white/10">
+                فوري Fawry
+              </span>
+            </div>
+
+            <div className="pt-2">
+              <span className="inline-flex items-center gap-1.5 bg-[#006B4D]/30 border border-[#10B981]/30 px-3 py-1.5 rounded-xl text-[11px] font-bold text-[#10B981]">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#10B981]" />
+                <span>ربط مالي وضريبي ETA معتمد</span>
+              </span>
+            </div>
           </div>
 
         </div>

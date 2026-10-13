@@ -9,7 +9,7 @@ import {
   Building2, Car as CarIcon, Plus, CheckCircle2, XCircle, 
   TrendingUp, Users, DollarSign, Calendar, ShieldCheck, 
   Sparkles, SlidersHorizontal, ArrowLeft, MessageSquare, 
-  BarChart3, Clock, AlertCircle 
+  BarChart3, Clock, AlertCircle, Radio 
 } from 'lucide-react';
 
 export default function DealerDashboardPage() {
@@ -115,6 +115,13 @@ export default function DealerDashboardPage() {
             >
               <MessageSquare className="w-4 h-4 text-[#10B981]" />
               <span>محادثات العملاء</span>
+            </Link>
+            <Link 
+              href="/dealer/tracking"
+              className="bg-[#10B981]/20 hover:bg-[#10B981]/30 text-[#10B981] border border-[#10B981]/40 px-5 py-3 rounded-2xl font-bold text-xs md:text-sm transition-all flex items-center gap-2"
+            >
+              <Radio className="w-4 h-4 animate-pulse" />
+              <span>التتبع المباشر GPS</span>
             </Link>
           </div>
         </div>

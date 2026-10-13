@@ -561,3 +561,12 @@ export const sendMessage = (threadId: string, msg: ChatMessage) => {
     }
   }
 };
+
+// Convenience aliases for architecture spec compatibility
+export const login = loginUser;
+export const register = registerUser;
+export const logout = logoutUser;
+export const getMessages = (threadId: string): ChatMessage[] => {
+  const conv = getConversationById(threadId);
+  return conv ? conv.messages : [];
+};

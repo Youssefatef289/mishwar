@@ -53,25 +53,35 @@ export default function RegisterPage() {
           </p>
         </div>
 
+        {/* Step Progress Bar */}
+        <div className="mb-6 bg-slate-50 border border-slate-100 p-3 rounded-2xl flex items-center justify-between text-xs font-bold">
+          <div className="flex items-center gap-2">
+            <span className="w-6 h-6 rounded-full bg-[#006B4D] text-white flex items-center justify-center text-xs">1</span>
+            <span className="text-slate-800">الخطوة 1 من 2: بيانات الحساب ونوع العضوية</span>
+          </div>
+          <span className="text-[#006B4D] bg-[#E6F4EF] px-2.5 py-1 rounded-full text-[11px]">متبقي خطوة</span>
+        </div>
+
         {/* 3-Roles Selector Tabs */}
-        <div className="grid grid-cols-3 gap-2 bg-[#F8FAFC] p-1.5 rounded-2xl mb-8 border border-slate-200/80">
+        <div className="grid grid-cols-3 gap-2 bg-[#F8FAFC] p-1.5 rounded-2xl mb-6 border border-slate-200/80">
           <button 
             type="button"
             onClick={() => setRole('renter')}
-            className={`flex items-center justify-center gap-1.5 py-3 rounded-xl text-xs font-bold transition-all ${
+            className={`flex flex-col items-center justify-center gap-1 py-3 px-2 rounded-xl text-xs font-bold transition-all text-center ${
               role === 'renter' 
                 ? 'bg-white text-[#006B4D] shadow-sm ring-1 ring-[#006B4D]/20' 
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <UserIcon className="w-4 h-4" />
-            <span>مستأجر / أفراد</span>
+            <span>مستأجر / عميل</span>
+            <span className="text-[10px] text-slate-400 font-normal">استئجار سيارات فاخرة</span>
           </button>
 
           <button 
             type="button"
             onClick={() => setRole('dealer')}
-            className={`flex items-center justify-center gap-1.5 py-3 rounded-xl text-xs font-bold transition-all ${
+            className={`flex flex-col items-center justify-center gap-1 py-3 px-2 rounded-xl text-xs font-bold transition-all text-center ${
               role === 'dealer' 
                 ? 'bg-white text-[#006B4D] shadow-sm ring-1 ring-[#006B4D]/20' 
                 : 'text-slate-600 hover:text-slate-900'
@@ -79,19 +89,21 @@ export default function RegisterPage() {
           >
             <Building2 className="w-4 h-4" />
             <span>معرض معتمد</span>
+            <span className="text-[10px] text-slate-400 font-normal">إدارة الأساطيل وعقود ETA</span>
           </button>
 
           <button 
             type="button"
             onClick={() => setRole('host')}
-            className={`flex items-center justify-center gap-1.5 py-3 rounded-xl text-xs font-bold transition-all ${
+            className={`flex flex-col items-center justify-center gap-1 py-3 px-2 rounded-xl text-xs font-bold transition-all text-center ${
               role === 'host' 
                 ? 'bg-white text-[#006B4D] shadow-sm ring-1 ring-[#006B4D]/20' 
                 : 'text-slate-600 hover:text-slate-900'
             }`}
           >
             <Key className="w-4 h-4" />
-            <span>مالك سيارة P2P</span>
+            <span>مالك سيارة (P2P)</span>
+            <span className="text-[10px] text-slate-400 font-normal">مشاركة سيارتك واستثمارها</span>
           </button>
         </div>
 
@@ -152,7 +164,14 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-700 mb-1.5">كلمة المرور (8 أحرف على الأقل)</label>
+            <div className="flex justify-between items-center mb-1.5">
+              <label className="block text-xs font-bold text-slate-700">كلمة المرور (8 أحرف على الأقل)</label>
+              {password.length > 0 && (
+                <span className={`text-[11px] font-bold ${password.length >= 8 ? 'text-[#10B981]' : 'text-amber-500'}`}>
+                  {password.length >= 8 ? 'قوة كلمة المرور: ممتازة ✓' : 'كلمة المرور: قصيرة'}
+                </span>
+              )}
+            </div>
             <input 
               type="password" 
               required
@@ -161,11 +180,21 @@ export default function RegisterPage() {
               placeholder="••••••••"
               className="w-full bg-[#F8FAFC] border border-slate-200 rounded-xl px-4 py-3 text-xs md:text-sm font-semibold text-slate-900 outline-none focus:border-[#006B4D]"
             />
+            {/* Password strength bar */}
+            {password.length > 0 && (
+              <div className="w-full h-1.5 bg-slate-100 rounded-full mt-2 overflow-hidden">
+                <div 
+                  className={`h-full transition-all duration-300 ${
+                    password.length >= 8 ? 'bg-[#10B981] w-full' : password.length >= 5 ? 'bg-amber-400 w-2/3' : 'bg-rose-500 w-1/3'
+                  }`}
+                ></div>
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-2 pt-2 text-xs font-semibold text-slate-600">
-            <input type="checkbox" required defaultChecked className="accent-[#006B4D]" />
-            <span>أوافق على الشروط والأحكام ووثيقة العقود الإلكترونية الموحدة</span>
+            <input type="checkbox" required defaultChecked className="accent-[#006B4D] w-4 h-4 rounded" />
+            <span>أوافق على الشروط والأحكام ووثيقة العقود الإلكترونية الموحدة ETA</span>
           </div>
 
           <button 

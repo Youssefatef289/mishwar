@@ -1,27 +1,51 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { getCurrentUser, logoutUser, setCurrentUser, getUsers, User } from '@/utils/storage';
 import { 
-  Car, Bell, User as UserIcon, LogOut, MessageSquare, ShieldCheck, 
-  ChevronDown, Sparkles, Building2, Key, CheckCircle2 
+  Car, Bell, User as UserIcon, LogOut, ShieldCheck, 
+  ChevronDown, Building2, Key, CheckCircle2, Menu, X, 
+  BadgePercent, FileText, MapPin, Sparkles, MessageSquare
 } from 'lucide-react';
 
 export default function Navbar() {
   const [user, setUser] = useState<User | null>(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
   const pathname = usePathname();
   const router = useRouter();
+  
+  const userDropdownRef = useRef<HTMLDivElement>(null);
+  const servicesDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setUser(getCurrentUser());
+    setMobileMenuOpen(false);
+    setUserDropdownOpen(false);
+    setServicesDropdownOpen(false);
   }, [pathname]);
+
+  // Click outside listener for dropdowns
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userDropdownRef.current && !userDropdownRef.current.contains(event.target as Node)) {
+        setUserDropdownOpen(false);
+      }
+      if (servicesDropdownRef.current && !servicesDropdownRef.current.contains(event.target as Node)) {
+        setServicesDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleLogout = () => {
     logoutUser();
     setUser(null);
-    setDropdownOpen(false);
+    setUserDropdownOpen(false);
     router.push('/login');
   };
 
@@ -31,7 +55,7 @@ export default function Navbar() {
     if (target) {
       setCurrentUser(target);
       setUser(target);
-      setDropdownOpen(false);
+      setUserDropdownOpen(false);
       if (role === 'dealer') router.push('/dealer/dashboard');
       else if (role === 'host') router.push('/host/dashboard');
       else router.push('/my-bookings');
@@ -41,269 +65,309 @@ export default function Navbar() {
   const isActive = (path: string) => pathname === path;
 
   return (
-    <header className="bg-white border-b border-slate-100 sticky top-0 z-50 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.04)]">
+    <header className="bg-white border-b border-[#E3E5EA] sticky top-0 z-50 shadow-xs" dir="rtl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+        
+        {/* Single Line Header Bar */}
+        <div className="flex items-center justify-between h-16 sm:h-20 whitespace-nowrap">
           
-          {/* Right Area (Brand & Main Navigation in RTL) */}
-          <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-12 h-12 rounded-2xl bg-[#006B4D] flex items-center justify-center text-white shadow-md shadow-[#006B4D]/20 group-hover:bg-[#00533C] transition-colors">
-                <Car className="w-7 h-7" />
+          {/* Right: Brand + Main Nav on Single Line */}
+          <div className="flex items-center gap-6 lg:gap-8">
+            
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+              <div className="w-10 h-10 rounded-[10px] bg-[#0B9A5B] flex items-center justify-center text-white shadow-xs group-hover:bg-[#09814c] transition-colors">
+                <Car className="w-5 h-5" />
               </div>
               <div className="flex flex-col">
-                <span className="text-2xl font-black text-slate-900 tracking-tight leading-none">مشوار</span>
-                <span className="text-[11px] font-semibold text-[#006B4D] mt-1">منصة المركبات والتنقل الذكي</span>
+                <span className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight leading-none">
+                  مشوار
+                </span>
+                <span className="text-[10px] font-bold text-[#0B9A5B] mt-0.5">
+                  سيارات معتمدة
+                </span>
               </div>
             </Link>
 
-            {/* Nav Links */}
-            <nav className="hidden lg:flex items-center gap-1">
+            {/* Desktop Navigation Links (Compact & Single-Line) */}
+            <nav className="hidden lg:flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-700">
+              
+              {/* 1. الرئيسية */}
               <Link 
                 href="/" 
-                className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
-                  isActive('/') ? 'text-[#006B4D] bg-[#E6F4EF]' : 'text-slate-600 hover:text-[#006B4D] hover:bg-slate-50'
+                className={`px-3.5 py-2 rounded-[8px] transition-colors ${
+                  isActive('/') ? 'text-[#0B9A5B] bg-[#E6FBF2]' : 'hover:text-[#0B9A5B] hover:bg-slate-50'
                 }`}
               >
                 الرئيسية
               </Link>
+
+              {/* 2. سيارات مستعملة */}
               <Link 
-                href="/fleet" 
-                className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
-                  isActive('/fleet') ? 'text-[#006B4D] bg-[#E6F4EF]' : 'text-slate-600 hover:text-[#006B4D] hover:bg-slate-50'
+                href="/used-cars" 
+                className={`px-3.5 py-2 rounded-[8px] transition-colors ${
+                  isActive('/used-cars') ? 'text-[#0B9A5B] bg-[#E6FBF2]' : 'hover:text-[#0B9A5B] hover:bg-slate-50'
                 }`}
               >
-                تصفح الأسطول
+                سيارات مستعملة
               </Link>
+
+              {/* 3. سيارات جديدة */}
               <Link 
-                href="/#latest-additions" 
-                className="px-3.5 py-2 rounded-xl text-sm font-bold text-slate-600 hover:text-[#006B4D] hover:bg-slate-50 transition-all"
+                href="/#new-cars" 
+                className="px-3.5 py-2 rounded-[8px] hover:text-[#0B9A5B] hover:bg-slate-50 transition-colors"
               >
-                أحدث الإضافات
-              </Link>
-              <Link 
-                href="/#why-choose-us" 
-                className="px-3.5 py-2 rounded-xl text-sm font-bold text-slate-600 hover:text-[#006B4D] hover:bg-slate-50 transition-all"
-              >
-                ليه مشوار؟
+                سيارات جديدة
               </Link>
 
-              {/* Renter Specific */}
-              {user?.role === 'renter' && (
-                <>
-                  <Link 
-                    href="/my-bookings" 
-                    className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
-                      isActive('/my-bookings') ? 'text-[#006B4D] bg-[#E6F4EF]' : 'text-slate-600 hover:text-[#006B4D] hover:bg-slate-50'
-                    }`}
-                  >
-                    حجوزاتي
-                  </Link>
-                  <Link 
-                    href="/chat" 
-                    className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
-                      isActive('/chat') ? 'text-[#006B4D] bg-[#E6F4EF]' : 'text-slate-600 hover:text-[#006B4D] hover:bg-slate-50'
-                    }`}
-                  >
-                    المحادثات
-                  </Link>
-                </>
-              )}
-
-              {/* Dealer Specific */}
-              {user?.role === 'dealer' && (
-                <>
-                  <Link 
-                    href="/dealer/dashboard" 
-                    className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
-                      isActive('/dealer/dashboard') ? 'text-[#006B4D] bg-[#E6F4EF]' : 'text-slate-600 hover:text-[#006B4D] hover:bg-slate-50'
-                    }`}
-                  >
-                    لوحة تحكم الأسطول
-                  </Link>
-                  <Link 
-                    href="/dealer/chat" 
-                    className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
-                      isActive('/dealer/chat') ? 'text-[#006B4D] bg-[#E6F4EF]' : 'text-slate-600 hover:text-[#006B4D] hover:bg-slate-50'
-                    }`}
-                  >
-                    محادثات العملاء
-                  </Link>
-                  <Link 
-                    href="/dealer/contracts" 
-                    className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
-                      isActive('/dealer/contracts') ? 'text-[#006B4D] bg-[#E6F4EF]' : 'text-slate-600 hover:text-[#006B4D] hover:bg-slate-50'
-                    }`}
-                  >
-                    العقود والفواتير
-                  </Link>
-                </>
-              )}
-
-              {/* Host Specific */}
-              {user?.role === 'host' && (
-                <Link 
-                  href="/host/dashboard" 
-                  className={`px-3.5 py-2 rounded-xl text-sm font-bold transition-all ${
-                    isActive('/host/dashboard') ? 'text-[#006B4D] bg-[#E6F4EF]' : 'text-slate-600 hover:text-[#006B4D] hover:bg-slate-50'
+              {/* 4. Dropdown: خدمات مشوار */}
+              <div className="relative" ref={servicesDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
+                  className={`px-3.5 py-2 rounded-[8px] flex items-center gap-1 transition-colors ${
+                    servicesDropdownOpen ? 'text-[#0B9A5B] bg-[#E6FBF2]' : 'hover:text-[#0B9A5B] hover:bg-slate-50'
                   }`}
                 >
-                  لوحة سيارتي والأرباح
-                </Link>
-              )}
-
-              {!user && (
-                <>
-                  <Link href="/register" className="px-3.5 py-2 rounded-xl text-sm font-bold text-slate-600 hover:text-[#006B4D] hover:bg-slate-50">
-                    انضم كمعرض/مالك
-                  </Link>
-                  <Link href="/profile" className="px-3.5 py-2 rounded-xl text-sm font-bold text-slate-600 hover:text-[#006B4D] hover:bg-slate-50">
-                    المعارض المعتمدة
-                  </Link>
-                </>
-              )}
-            </nav>
-          </div>
-
-          {/* Left Area (Actions & User Profile in RTL) */}
-          <div className="flex items-center gap-3 md:gap-4">
-            
-            {/* Currency Pill */}
-            <div className="hidden sm:flex items-center gap-1.5 bg-slate-50 border border-slate-200/80 px-3 py-1.5 rounded-full text-xs font-bold text-slate-700">
-              <span className="w-4 h-3 bg-red-600 rounded-sm relative overflow-hidden inline-block border border-slate-300">
-                <span className="block h-1 bg-white"></span>
-                <span className="block h-1 bg-black"></span>
-              </span>
-              <span>ج.م (EGP)</span>
-            </div>
-
-            {/* Notification Bell */}
-            <Link 
-              href="/notifications" 
-              className="relative p-2.5 rounded-xl border border-slate-200/80 hover:bg-slate-50 text-slate-600 transition-colors"
-              title="مركز الإشعارات"
-            >
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-[#EF4444] ring-2 ring-white"></span>
-            </Link>
-
-            {/* User Dropdown / Login */}
-            {user ? (
-              <div className="relative">
-                <button 
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
-                  className="flex items-center gap-3 p-1.5 pr-3 rounded-2xl border border-slate-200/80 hover:border-[#006B4D]/40 bg-white hover:bg-slate-50 transition-all text-right"
-                >
-                  <div className="flex flex-col">
-                    <span className="text-xs font-extrabold text-slate-900 line-clamp-1">{user.name}</span>
-                    <span className="text-[10px] font-bold text-[#006B4D] flex items-center gap-1">
-                      <ShieldCheck className="w-3 h-3 text-[#10B981]" />
-                      {user.role === 'dealer' ? 'معرض معتمد' : user.role === 'host' ? 'مالك P2P' : 'مستأجر موثق'}
-                    </span>
-                  </div>
-                  <img 
-                    src={user.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80'} 
-                    alt={user.name} 
-                    className="w-9 h-9 rounded-xl object-cover ring-2 ring-[#006B4D]/20"
-                  />
-                  <ChevronDown className="w-4 h-4 text-slate-400" />
+                  <span>خدمات مشوار</span>
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${servicesDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                {/* Dropdown Menu */}
-                {dropdownOpen && (
-                  <div className="absolute left-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-100 p-2 z-50 text-right animate-in fade-in slide-in-from-top-2">
-                    <div className="p-3 border-b border-slate-100 bg-[#F8FAFC] rounded-xl mb-2">
-                      <p className="text-xs text-slate-500 font-semibold">الحساب النشط حالياً:</p>
-                      <p className="text-sm font-bold text-slate-900">{user.name}</p>
-                      <div className="flex items-center gap-1.5 mt-1.5 text-[11px] font-bold text-[#10B981]">
-                        <CheckCircle2 className="w-3.5 h-3.5" />
-                        <span>الهوية الوطنية المصرية موثقة رقمياً</span>
-                      </div>
+                {/* Services Dropdown Menu */}
+                {servicesDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-[10px] shadow-lg border border-[#E3E5EA] p-1.5 z-50 animate-in fade-in slide-in-from-top-1">
+                    <Link
+                      href="/#sell-car"
+                      onClick={() => setServicesDropdownOpen(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-[6px] text-xs font-bold text-slate-800 hover:bg-[#E6FBF2] hover:text-[#0B9A5B] transition-colors"
+                    >
+                      <Sparkles className="w-4 h-4 text-[#0B9A5B]" />
+                      <span>بيع سيارتك</span>
+                    </Link>
+                    <Link
+                      href="/fleet"
+                      onClick={() => setServicesDropdownOpen(false)}
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-[6px] text-xs font-bold text-slate-800 hover:bg-[#E6FBF2] hover:text-[#0B9A5B] transition-colors"
+                    >
+                      <Car className="w-4 h-4 text-[#0B9A5B]" />
+                      <span>تصفح الأسطول</span>
+                    </Link>
+                    
+                    {user?.role === 'renter' && (
+                      <>
+                        <div className="my-1 border-t border-[#E3E5EA]" />
+                        <Link
+                          href="/my-bookings"
+                          onClick={() => setServicesDropdownOpen(false)}
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-[6px] text-xs font-bold text-slate-800 hover:bg-[#E6FBF2] hover:text-[#0B9A5B] transition-colors"
+                        >
+                          <FileText className="w-4 h-4 text-[#0B9A5B]" />
+                          <span>حجوزاتي</span>
+                        </Link>
+                        <Link
+                          href="/chat"
+                          onClick={() => setServicesDropdownOpen(false)}
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-[6px] text-xs font-bold text-slate-800 hover:bg-[#E6FBF2] hover:text-[#0B9A5B] transition-colors"
+                        >
+                          <MessageSquare className="w-4 h-4 text-[#0B9A5B]" />
+                          <span>المحادثات</span>
+                        </Link>
+                      </>
+                    )}
+
+                    {user?.role === 'dealer' && (
+                      <>
+                        <div className="my-1 border-t border-[#E3E5EA]" />
+                        <Link
+                          href="/dealer/dashboard"
+                          onClick={() => setServicesDropdownOpen(false)}
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-[6px] text-xs font-bold text-slate-800 hover:bg-[#E6FBF2] hover:text-[#0B9A5B] transition-colors"
+                        >
+                          <Building2 className="w-4 h-4 text-[#0B9A5B]" />
+                          <span>لوحة المعرض</span>
+                        </Link>
+                        <Link
+                          href="/dealer/contracts"
+                          onClick={() => setServicesDropdownOpen(false)}
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-[6px] text-xs font-bold text-slate-800 hover:bg-[#E6FBF2] hover:text-[#0B9A5B] transition-colors"
+                        >
+                          <FileText className="w-4 h-4 text-[#0B9A5B]" />
+                          <span>العقود</span>
+                        </Link>
+                      </>
+                    )}
+
+                    {!user && (
+                      <>
+                        <div className="my-1 border-t border-[#E3E5EA]" />
+                        <Link
+                          href="/register"
+                          onClick={() => setServicesDropdownOpen(false)}
+                          className="flex items-center gap-2.5 px-3 py-2 rounded-[6px] text-xs font-bold text-slate-800 hover:bg-[#E6FBF2] hover:text-[#0B9A5B] transition-colors"
+                        >
+                          <Building2 className="w-4 h-4 text-[#0B9A5B]" />
+                          <span>انضم كشريك أو معرض</span>
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+
+            </nav>
+
+          </div>
+
+          {/* Left: Minimal Actions & User Profile Dropdown on Single Line */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            
+            {/* Notification Icon */}
+            <Link 
+              href="/notifications" 
+              className="relative p-2 rounded-[8px] hover:bg-slate-100 text-slate-600 transition-colors"
+              title="الإشعارات"
+            >
+              <Bell className="w-5 h-5" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#EF4444]" />
+            </Link>
+
+            {/* User Dropdown */}
+            {user ? (
+              <div className="relative" ref={userDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                  className="flex items-center gap-2 p-1.5 pr-2.5 rounded-[8px] border border-[#E3E5EA] hover:border-[#0B9A5B]/40 bg-white hover:bg-slate-50 transition-colors cursor-pointer text-right"
+                >
+                  <img
+                    src={user.avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80'}
+                    alt={user.name}
+                    className="w-7 h-7 rounded-full object-cover border border-slate-200"
+                  />
+                  <span className="text-xs font-extrabold text-slate-900 hidden sm:inline max-w-[100px] truncate">
+                    {user.name}
+                  </span>
+                  <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                </button>
+
+                {/* User Dropdown Menu */}
+                {userDropdownOpen && (
+                  <div className="absolute left-0 mt-2 w-64 bg-white rounded-[10px] shadow-xl border border-[#E3E5EA] p-2 z-50 animate-in fade-in slide-in-from-top-1 text-right">
+                    <div className="p-2.5 bg-slate-50 rounded-[8px] mb-2 border border-slate-100">
+                      <p className="text-[11px] text-slate-400 font-bold">الحساب الحالي</p>
+                      <p className="text-xs font-extrabold text-slate-900 truncate">{user.name}</p>
+                      <span className="text-[10px] font-bold text-[#0B9A5B] flex items-center gap-1 mt-0.5">
+                        <ShieldCheck className="w-3 h-3" />
+                        {user.role === 'dealer' ? 'معرض معتمد' : user.role === 'host' ? 'مالك سيارة' : 'مستأجر موثق'}
+                      </span>
                     </div>
 
-                    <div className="space-y-1">
-                      <div className="px-3 py-1.5 text-[11px] font-bold text-slate-400">تبديل الحساب التجريبي سريعاً:</div>
-                      <button 
-                        onClick={() => handleSwitchUser('renter')}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                          user.role === 'renter' ? 'bg-[#E6F4EF] text-[#006B4D]' : 'hover:bg-slate-50 text-slate-700'
-                        }`}
-                      >
-                        <span className="flex items-center gap-2"><UserIcon className="w-4 h-4" /> مستأجر (م. طارق المنشاوي)</span>
-                        {user.role === 'renter' && <span className="w-2 h-2 rounded-full bg-[#006B4D]"></span>}
-                      </button>
-
-                      <button 
-                        onClick={() => handleSwitchUser('dealer')}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                          user.role === 'dealer' ? 'bg-[#E6F4EF] text-[#006B4D]' : 'hover:bg-slate-50 text-slate-700'
-                        }`}
-                      >
-                        <span className="flex items-center gap-2"><Building2 className="w-4 h-4" /> معرض (رويال كارز VIP)</span>
-                        {user.role === 'dealer' && <span className="w-2 h-2 rounded-full bg-[#006B4D]"></span>}
-                      </button>
-
-                      <button 
-                        onClick={() => handleSwitchUser('host')}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-bold transition-colors ${
-                          user.role === 'host' ? 'bg-[#E6F4EF] text-[#006B4D]' : 'hover:bg-slate-50 text-slate-700'
-                        }`}
-                      >
-                        <span className="flex items-center gap-2"><Key className="w-4 h-4" /> مالك سيارة (أحمد كمال P2P)</span>
-                        {user.role === 'host' && <span className="w-2 h-2 rounded-full bg-[#006B4D]"></span>}
-                      </button>
+                    {/* Role Switcher */}
+                    <div className="px-2 py-1 text-[10px] font-bold text-slate-400">
+                      تبديل الحساب التجريبي:
                     </div>
+                    <button
+                      type="button"
+                      onClick={() => handleSwitchUser('renter')}
+                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[6px] text-xs font-bold transition-colors ${
+                        user.role === 'renter' ? 'bg-[#E6FBF2] text-[#0B9A5B]' : 'hover:bg-slate-50 text-slate-700'
+                      }`}
+                    >
+                      <span>مستأجر (م. طارق)</span>
+                      {user.role === 'renter' && <CheckCircle2 className="w-3.5 h-3.5 text-[#0B9A5B]" />}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleSwitchUser('dealer')}
+                      className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-[6px] text-xs font-bold transition-colors ${
+                        user.role === 'dealer' ? 'bg-[#E6FBF2] text-[#0B9A5B]' : 'hover:bg-slate-50 text-slate-700'
+                      }`}
+                    >
+                      <span>معرض (رويال كارز)</span>
+                      {user.role === 'dealer' && <CheckCircle2 className="w-3.5 h-3.5 text-[#0B9A5B]" />}
+                    </button>
 
-                    <div className="border-t border-slate-100 mt-2 pt-2">
-                      <Link 
-                        href="/profile" 
-                        onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2 px-3 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 rounded-xl"
-                      >
-                        <ShieldCheck className="w-4 h-4 text-[#006B4D]" />
-                        ملفي الشخصي والتوثيق
-                      </Link>
-
-                      <button 
-                        onClick={handleLogout}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-[#EF4444] hover:bg-red-50 rounded-xl transition-colors"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        تسجيل الخروج
-                      </button>
-                    </div>
+                    <div className="my-1.5 border-t border-[#E3E5EA]" />
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-[6px] text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>تسجيل الخروج</span>
+                    </button>
                   </div>
                 )}
               </div>
             ) : (
-              <div className="flex items-center gap-2">
-                <Link 
-                  href="/login" 
-                  className="px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold text-[#006B4D] hover:bg-[#E6F4EF] transition-colors"
-                >
-                  تسجيل الدخول
-                </Link>
-                <Link 
-                  href="/register" 
-                  className="px-4 py-2.5 rounded-xl text-xs md:text-sm font-bold text-white bg-[#006B4D] hover:bg-[#00533C] transition-all shadow-sm"
-                >
-                  إنشاء حساب
-                </Link>
-              </div>
+              <Link
+                href="/login"
+                className="bg-[#0B9A5B] hover:bg-[#09814c] text-white text-xs font-bold px-3.5 py-2 rounded-[6px] transition-colors shadow-xs"
+              >
+                تسجيل الدخول
+              </Link>
             )}
 
-            {/* Quick CTA */}
-            <Link 
-              href={user?.role === 'dealer' ? '/dealer/dashboard' : '/fleet'}
-              className="hidden md:flex items-center gap-2 bg-[#006B4D] hover:bg-[#00533C] text-white px-4 py-2.5 rounded-xl font-bold text-xs md:text-sm shadow-sm transition-all"
+            {/* Mobile Hamburger Button */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 text-slate-700 hover:bg-slate-100 rounded-[6px] transition-colors"
+              aria-label="القائمة"
             >
-              <Sparkles className="w-4 h-4" />
-              <span>{user?.role === 'dealer' ? 'لوحة الأسطول' : 'احجز سيارتك'}</span>
-            </Link>
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
 
           </div>
+
         </div>
+
       </div>
+
+      {/* Mobile Drawer Menu */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden border-t border-[#E3E5EA] bg-white px-4 py-4 space-y-2 animate-in fade-in duration-200">
+          <Link
+            href="/"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`block px-3 py-2 rounded-[6px] text-sm font-bold ${
+              isActive('/') ? 'text-[#0B9A5B] bg-[#E6FBF2]' : 'text-slate-700 hover:bg-slate-50'
+            }`}
+          >
+            الرئيسية
+          </Link>
+          <Link
+            href="/used-cars"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`block px-3 py-2 rounded-[6px] text-sm font-bold ${
+              isActive('/used-cars') ? 'text-[#0B9A5B] bg-[#E6FBF2]' : 'text-slate-700 hover:bg-slate-50'
+            }`}
+          >
+            سيارات مستعملة
+          </Link>
+          <Link
+            href="/#new-cars"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-[6px] text-sm font-bold text-slate-700 hover:bg-slate-50"
+          >
+            سيارات جديدة
+          </Link>
+          <Link
+            href="/#sell-car"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-[6px] text-sm font-bold text-slate-700 hover:bg-slate-50"
+          >
+            بيع سيارتك
+          </Link>
+          <Link
+            href="/fleet"
+            onClick={() => setMobileMenuOpen(false)}
+            className="block px-3 py-2 rounded-[6px] text-sm font-bold text-slate-700 hover:bg-slate-50"
+          >
+            تصفح الأسطول
+          </Link>
+        </div>
+      )}
     </header>
   );
 }

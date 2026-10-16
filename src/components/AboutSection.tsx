@@ -1,14 +1,29 @@
 "use client";
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Link from 'next/link';
-import { Play, Pause } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 
 export default function AboutSection() {
-  const [showVideo, setShowVideo] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const handleVideoToggle = () => {
-    setShowVideo(!showVideo);
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
   };
 
   return (
@@ -16,56 +31,52 @@ export default function AboutSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Main Card Container (مطابق للصورة المرفقة طبق الأصل) */}
-        <div className="bg-white border border-[#E5E7EB] rounded-3xl p-6 sm:p-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="bg-white border border-[#E5E7EB] rounded-3xl p-6 sm:p-8 lg:p-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
             
-            {/* 1. LEFT COLUMN: Showroom Photo / Video Tour (الصورة الأصلية مع إمكانية تشغيل الفيديو) */}
-            <div className="lg:col-span-6 relative rounded-2xl overflow-hidden border border-slate-200 aspect-[4/3] bg-slate-950 group">
-              {!showVideo ? (
-                <div className="relative w-full h-full">
-                  <img
-                    src="/images/about-showroom.webp"
-                    alt="صالة عرض رنتكس لتأجير السيارات"
-                    className="w-full h-full object-cover select-none"
-                  />
-                  {/* Subtle Video Play Button on Hover */}
-                  <button
-                    type="button"
-                    onClick={handleVideoToggle}
-                    className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
-                    aria-label="تشغيل الفيديو التعريفي"
-                  >
-                    <div className="w-14 h-14 rounded-full bg-white/95 text-[#7A0C16] flex items-center justify-center hover:scale-110 transition-transform">
-                      <Play className="w-6 h-6 fill-current ml-0.5" />
-                    </div>
-                  </button>
-                </div>
-              ) : (
-                <div className="relative w-full h-full">
-                  <video
-                    ref={videoRef}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    controls
-                    className="w-full h-full object-cover"
-                  >
-                    <source src="/videos/about-us.mp4" type="video/mp4" />
-                  </video>
-                  <button
-                    type="button"
-                    onClick={handleVideoToggle}
-                    className="absolute top-3 left-3 bg-black/70 text-white text-[11px] font-bold px-3 py-1 rounded-full cursor-pointer hover:bg-black"
-                  >
-                    عرض الصورة
-                  </button>
-                </div>
-              )}
+            {/* 1. LEFT COLUMN: Large Auto-playing Video (مستطيل رأسي بارتفاع السيكشن بالكامل وليس مربعاً) */}
+            <div className="lg:col-span-6 relative rounded-2xl overflow-hidden border border-slate-200 bg-slate-950 min-h-[380px] sm:min-h-[460px] lg:min-h-[530px] h-full flex flex-col group">
+              <video
+                ref={videoRef}
+                autoPlay
+                loop
+                muted
+                playsInline
+                poster="/images/about-showroom.webp"
+                className="w-full h-full object-cover absolute inset-0"
+              >
+                <source src="/videos/about-us.mp4" type="video/mp4" />
+              </video>
+
+              {/* Controls overlay in the corner */}
+              <div className="absolute bottom-4 right-4 z-10 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={togglePlay}
+                  className="w-9 h-9 rounded-full bg-black/60 hover:bg-black/85 text-white flex items-center justify-center backdrop-blur-xs transition-transform hover:scale-105 cursor-pointer"
+                  aria-label={isPlaying ? 'إيقاف مؤقت' : 'تشغيل'}
+                >
+                  {isPlaying ? <Pause className="w-4 h-4 fill-current" /> : <Play className="w-4 h-4 fill-current ml-0.5" />}
+                </button>
+                <button
+                  type="button"
+                  onClick={toggleMute}
+                  className="w-9 h-9 rounded-full bg-black/60 hover:bg-black/85 text-white flex items-center justify-center backdrop-blur-xs transition-transform hover:scale-105 cursor-pointer"
+                  aria-label={isMuted ? 'تشغيل الصوت' : 'كتم الصوت'}
+                >
+                  {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                </button>
+              </div>
+
+              {/* Status Badge */}
+              <div className="absolute top-4 right-4 z-10 bg-black/60 backdrop-blur-xs text-white text-[11px] font-bold px-3 py-1.5 rounded-full flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#00CF7B] animate-pulse" />
+                <span>فيديو مشوار التعريفي</span>
+              </div>
             </div>
 
             {/* 2. RIGHT COLUMN: Content (مطابق للخطوط والألوان والأيقونات طبق الأصل) */}
-            <div className="lg:col-span-6 text-right flex flex-col justify-between">
+            <div className="lg:col-span-6 text-right flex flex-col justify-between py-1">
               
               {/* Category Subtitle */}
               <div className="text-xs sm:text-sm font-bold text-slate-400 mb-2">

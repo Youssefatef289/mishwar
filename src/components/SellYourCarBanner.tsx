@@ -8,35 +8,35 @@ export default function SellYourCarBanner() {
     <section id="sell-car" className="py-8 md:py-12 bg-white" dir="rtl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Banner Card: Background #E9EAFE, Radius 12px, NO blue background shapes */}
-        <div className="bg-[#E9EAFE] rounded-[12px] min-h-[250px] md:h-[260px] border border-[#d5d8fa] relative overflow-hidden flex flex-col-reverse md:flex-row items-center justify-between p-6 sm:p-8 md:px-12 md:py-6 gap-6 shadow-xs">
+        {/* Banner Card: Background #E9EAFF, Radius 12px */}
+        <div className="bg-[#E9EAFF] rounded-[16px] min-h-[250px] md:h-[260px] border border-[#d5d8fa] relative overflow-hidden flex flex-col-reverse md:flex-row items-center justify-between p-6 sm:p-8 md:px-12 md:py-6 gap-6 shadow-sm">
           
           {/* Right Side: Text Inspired by Mishwar */}
           <div className="w-full md:w-1/2 text-right z-10 flex flex-col justify-center items-start">
-            <span className="text-xs font-black text-[#2B3990] bg-white/80 px-3 py-1 rounded-full mb-2 inline-block">
+            <span className="text-xs font-black text-[#0A2A5E] bg-white/80 px-3 py-1 rounded-full mb-2 inline-block">
               خدمة بيع السيارات المعتمدة
             </span>
             <h2 className="text-2xl sm:text-3xl md:text-[32px] font-black text-slate-900 leading-tight mb-2">
               بيع سيارتك بأعلى سعر عادل مع مشوار
             </h2>
-            <p className="text-xs sm:text-sm font-bold text-[#2B3990] mb-5 leading-relaxed">
+            <p className="text-xs sm:text-sm font-bold text-[#0A2A5E] mb-5 leading-relaxed">
               تقييم فوري دقيق، فحص في مكانك، وبدون وسطاء أو فصال مع إنهاء فوري لإجراءات نقل الملكية.
             </p>
 
             <div className="flex flex-wrap items-center gap-4 text-xs font-bold text-slate-700 mb-5">
               <span className="flex items-center gap-1">
-                <Banknote className="w-3.5 h-3.5 text-[#0B9A5B]" />
+                <Banknote className="w-3.5 h-3.5 text-[#00CF7B]" />
                 تحويل نقدي فوري
               </span>
               <span className="flex items-center gap-1">
-                <BadgeCheck className="w-3.5 h-3.5 text-[#0B9A5B]" />
+                <BadgeCheck className="w-3.5 h-3.5 text-[#00CF7B]" />
                 فحص فني مجاني
               </span>
             </div>
 
             <Link
               href="/register"
-              className="w-full sm:w-[220px] h-[48px] bg-[#0A2A5E] hover:bg-[#071f45] text-white font-bold text-sm sm:text-base rounded-[6px] flex items-center justify-center transition-colors shadow-xs active:scale-[0.98]"
+              className="w-full sm:w-[220px] h-[48px] bg-[#0A2A5E] hover:bg-[#00CF7B] hover:text-[#0A2A5E] text-white font-bold text-sm sm:text-base rounded-xl flex items-center justify-center transition-all shadow-sm active:scale-[0.98]"
             >
               اعرض سيارتك للبيع
             </Link>

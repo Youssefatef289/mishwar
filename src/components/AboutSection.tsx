@@ -75,14 +75,14 @@ export default function AboutSection() {
                     نبذة عنا
                   </span>
 
-                  {/* عنوان رئيسي كبير باللون العنابي الداكن */}
-                  <h2 className="text-[#6b0f12] text-3xl md:text-4xl font-extrabold mb-4 leading-tight">
+                  {/* عنوان رئيسي كبير باللون الأسود الصريح */}
+                  <h2 className="text-black text-3xl md:text-4xl font-extrabold mb-4 leading-tight">
                     الخيار الأمثل لتأجير السيارات في مصر
                   </h2>
 
-                  {/* خط فاصل مقسم لجزئين: خط رمادي فاتح ممتد مع جزء عنابي داكن */}
+                  {/* خط فاصل مقسم لجزئين: خط رمادي فاتح ممتد مع جزء أسود داكن */}
                   <div className="relative w-full h-[2px] bg-gray-200 mb-6">
-                    <div className="absolute right-0 top-0 h-[2px] w-20 bg-[#6b0f12]" />
+                    <div className="absolute right-0 top-0 h-[2px] w-20 bg-black" />
                   </div>
 
                   {/* الفقرة الوصفية باللون الأسود الصريح والواضح */}
